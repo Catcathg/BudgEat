@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\RestaurantsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RestaurantsRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
  */
 class Restaurants
 {
@@ -23,30 +22,26 @@ class Restaurants
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $adresse;
+    private $image;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float", nullable=true)
      */
-    private $codePostal;
+    private $rating;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ville;
+    private $distance;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", nullable=true)
      */
-    private $mail;
+    private $prix_minimum; 
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mdp;
-
+    // Getters et setters
     public function getId(): ?int
     {
         return $this->id;
@@ -60,67 +55,50 @@ class Restaurants
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getImage(): ?string
     {
-        return $this->adresse;
+        return $this->image;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setImage(?string $image): self
     {
-        $this->adresse = $adresse;
-
+        $this->image = $image;
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getRating(): ?float
     {
-        return $this->codePostal;
+        return $this->rating;
     }
 
-    public function setCodePostal(int $codePostal): self
+    public function setRating(?float $rating): self
     {
-        $this->codePostal = $codePostal;
-
+        $this->rating = $rating;
         return $this;
     }
 
-    public function getVille(): ?string
+    public function getDistance(): ?string
     {
-        return $this->ville;
+        return $this->distance;
     }
 
-    public function setVille(string $ville): self
+    public function setDistance(?string $distance): self
     {
-        $this->ville = $ville;
-
+        $this->distance = $distance;
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getPrixMinimum(): ?float
     {
-        return $this->mail;
+        return $this->prix_minimum;
     }
 
-    public function setMail(string $mail): self
+    public function setPrixMinimum(?float $prix_minimum): self
     {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getMdp(): ?string
-    {
-        return $this->mdp;
-    }
-
-    public function setMdp(string $mdp): self
-    {
-        $this->mdp = $mdp;
-
+        $this->prix_minimum = $prix_minimum;
         return $this;
     }
 }

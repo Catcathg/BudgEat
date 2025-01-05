@@ -147,52 +147,79 @@
 
     .budget {
         text-align: center;
-        padding: 2rem;
-        background-color: #f8f5f1;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
         border-radius: 10px;
-        max-width: 400px;
-        margin: 2rem auto;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
     }
-
+    
     .budget h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: #333;
-    }
-
-    .budget-input {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid #ffcc00;
-        border-radius: 25px;
-        background-color: white;
-        padding: 0.5rem 1rem;
-    }
-
-    .budget-btn {
-        font-size: 1.5rem;
+        font-size: 24px;
+        margin-bottom: 20px;
         font-weight: bold;
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: #333;
-        padding: 0 1rem;
-        transition: color 0.3s ease;
-    }
-
-    .budget-btn:hover {
-        color: #ffcc00;
-    }
-
-    #budget-display {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin: 0 1rem;
         color: #333;
     }
     
+    .budget-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .budget-btn {
+        background-color: #ffcc00;
+        color: white;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .budget-btn:hover {
+        background-color: #e6b800;
+    }
+    
+    #budget-display {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        width: 80px;
+        border: 2px solid #ffcc00;
+        border-radius: 5px;
+        padding: 5px;
+        color: #333;
+        background-color: #fff;
+        pointer-events: none; /* Rend le champ non éditable */
+    }
+    
+    .btn-login {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-login:hover {
+        background-color: #ffcc00;
+        color: white;
+    }
+    
+    .btn-signup:hover {
+        background-color:white;
+        color:#ffcc00;
+    }
+
     .hess {
         display: flex;
         justify-content: center; /* Centre horizontalement */
@@ -230,17 +257,17 @@
     .restaurant-list { display: flex; gap: 1rem; justify-content: center; }
     .restaurant-card { background-color: #fff; border: 1px solid #ddd; border-radius: 10px; width: 200px; text-align: center; padding: 1rem; }
     .restaurant-card img{ width: 80%; height: 180px; border-radius: 10px; margin-bottom: 1rem; }
-    .restaurant-card button { margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 5px; background-color: #ffcc00; color: white; font-weight: bold; }
-    
+    .restaurant-card button, .budget-input button { margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 5px; background-color: #ffcc00; color: white; font-weight: bold; }
+    .budget-input button {margin:5px;}
 </style>
 
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="/assets/logo.png" alt="BudgEat Logo">
+        <a href="/"><img src="/assets/logo.png" alt="BudgEat Logo"></a >
     </div>
     <ul>
-        <li><a href=" ">Restaurants</a ></li>
+        <li><a href="/restaurants">Restaurants</a ></li>
         <li><a href="/contact">Contact</a ></li>
     </ul>
     <div class="buttons">
@@ -276,17 +303,19 @@
 <!-- Budget Section -->
 <div class="budget">
     <h2>C’est quoi ton budget, chef ?</h2>
-    <div class="budget-input">
-        <button class="budget-btn" id="decrease">-</button>
-        <span id="budget-display">10 €</span>
-        <button class="budget-btn" id="increase">+</button>
-    </div>
+    <form method="GET" action="{{ path('filter_restaurants') }}">
+        <div class="budget-input">
+            <button type="button" class="budget-btn" id="decrease">-</button>
+            <input type="number" name="budget" id="budget-display" value="10" readonly>
+            <button type="button" class="budget-btn" id="increase">+</button>
+            <button type="submit" class="btn-login">Valider</button>
+        </div>
+    </form>
 </div>
-
 
 <!-- Restaurants Section -->
 <div class="restaurants">
-    <div class="hess"><h2>Quand c’est la hess...</h2> <button>Voir plus</button></div>
+    <div class="hess"><h2>Quand c’est la hess...</h2> <a href="/restaurants"><button>Voir plus</button></a></div>
     <div class="restaurant-list">
         <div class="restaurant-card">
             <img src="/assets/matcha.jpg" alt="Ochaya">
@@ -347,35 +376,23 @@
 
     updateCarousel();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const decreaseButton = document.getElementById('decrease');
-            const increaseButton = document.getElementById('increase');
-            const budgetDisplay = document.getElementById('budget-display');
+    document.addEventListener("DOMContentLoaded", () => {
+        const decreaseButton = document.getElementById("decrease");
+        const increaseButton = document.getElementById("increase");
+        const budgetDisplay = document.getElementById("budget-display");
     
-            let currentBudget = 10; // Budget initial
-    
-            // Met à jour l'affichage du budget
-            function updateBudgetDisplay() {
-                budgetDisplay.textContent = `${currentBudget} €`;
+        decreaseButton.addEventListener("click", () => {
+            let currentValue = parseInt(budgetDisplay.value);
+            if (currentValue > 0) {
+                budgetDisplay.value = currentValue - 5;
             }
-    
-            // Diminue le budget par tranches de 5
-            decreaseButton.addEventListener('click', () => {
-                if (currentBudget > 5) { // Évite un budget négatif
-                    currentBudget -= 5;
-                    updateBudgetDisplay();
-                }
-            });
-    
-            // Augmente le budget par tranches de 5
-            increaseButton.addEventListener('click', () => {
-                currentBudget += 5;
-                updateBudgetDisplay();
-            });
-    
-            // Initialisation de l'affichage
-            updateBudgetDisplay();
         });
+    
+        increaseButton.addEventListener("click", () => {
+            let currentValue = parseInt(budgetDisplay.value);
+            budgetDisplay.value = currentValue + 5;
+        });
+    });
    
 </script>
 {% endblock %}
