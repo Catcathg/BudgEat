@@ -48,8 +48,9 @@
     form {
         background-color: #fff;
         border-radius: 15px;
+        border: 1px solid black;
         padding: 20px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);*/
         width: 70%;
     }
 
@@ -89,7 +90,25 @@
         border: #ffcc00;
     }
 
+    .princiaplContenair{
+        /*margin-top: 90px;*/
+        margin : auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
 </style>
+
+<div class = "princiaplContenair">
+
+
+
+
+<h1>Inscris-toi, tu seras pas déçu promis !</h1>
+
 <div class="container">
     <!-- Logo à gauche -->
     <div class="logo">
@@ -133,6 +152,8 @@
 
         {{ form_end(form) }}
     </div>
+</div>
+
 </div>
 
 {% endblock %}
