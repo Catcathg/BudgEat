@@ -4,6 +4,7 @@
 
 {% block body %}
 <style>
+
     /* Navbar */
 
     .navbar {
@@ -258,9 +259,100 @@
     .restaurant-card { background-color: #fff; border: 1px solid #ddd; border-radius: 10px; width: 200px; text-align: center; padding: 1rem; }
     .restaurant-card img{ width: 80%; height: 180px; border-radius: 10px; margin-bottom: 1rem; }
     .restaurant-card button, .budget-input button { margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 5px; background-color: #ffcc00; color: white; font-weight: bold; }
-    .budget-input button {margin:5px;}
-</style>
 
+.footer {
+    background-color: #ffffff; / Fond blanc /
+    color: rgb(0, 0, 0); / Texte noir /
+    padding: 20px 0; / Espacement autour du footer /
+    width: 100%;
+    text-align: left; / Aligner le texte à gauche dans tout le footer /
+}
+
+.footer .footer-content {
+    display: flex; / Utilisation de Flexbox pour aligner le contenu horizontalement /
+    align-items: flex-start; / Aligner les éléments en haut du footer /
+    justify-content: space-between; / Espacer le logo à gauche et les liens à droite /
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footer-logo {
+    margin-right: 40px; / Espacement entre le logo et les colonnes de liens /
+}
+
+.footer-logo .logo {
+    width: 150px; / Largeur du logo /
+    height: auto; / Conserver les proportions /
+}
+
+/ Container pour les colonnes de liens /
+.footer-links-container {
+    display: flex;
+    gap: 40px; / Espacement entre les colonnes de liens /
+    justify-content: flex-start; / Aligner les colonnes à gauche /
+    width: 100%; / Prendre toute la largeur du footer /
+}
+
+/ Liens dans chaque colonne /
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px; / Espacement entre les liens /
+}
+
+.footer-links a {
+    color: #000000; / Couleur des liens /
+    text-decoration: none; / Supprimer le soulignement /
+}
+
+.footer-links a:hover {
+    text-decoration: underline; / Ajouter un soulignement au survol /
+}
+
+/ Icônes sociales sous le logo, alignées à droite et plus grandes /
+.social-icons {
+    display: flex; / Utilisation de Flexbox pour aligner horizontalement les icônes /
+    gap: 20px; / Espacement entre les icônes /
+    align-items: center; / Centrer verticalement les icônes /
+    margin-top: 30px; / Augmenter l'espacement au-dessus des icônes /
+    justify-content: flex-end; / Aligner les icônes à droite /
+    height: 60px; / Augmenter la hauteur du conteneur des icônes /
+}
+
+/ Style pour les icônes sociales /
+.social-icon {
+    font-size: 32px; / Augmenter la taille des icônes /
+    color: #000000; / Couleur des icônes /
+    text-decoration: none; / Supprimer le soulignement des liens /
+}
+
+.social-icon:hover {
+    color: #fdce54; / Couleur au survol des icônes /
+}
+
+/ Ajuster l'espacement entre les icônes pour qu'elles soient bien positionnées /
+.social-icons a {
+    display: flex;
+    align-items: center; / Aligner les icônes verticalement dans leur espace /
+    justify-content: center; / Centrer les icônes horizontalement /
+    height: 100%; / Prendre toute la hauteur disponible dans le conteneur /
+}
+
+/ Footer copyright /
+.footer-copyright {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center; / Aligner le texte du copyright à gauche */
+}
+
+    
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
@@ -339,6 +431,70 @@
             <button>Trajet</button>
         </div>
     </div>
+    <!-- Footer -->
+                        <footer class="footer">
+                            <div
+                                class="footer-content">
+                                <!-- Logo -->
+                                <div class="footer-logo">
+                                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+                                </div>
+
+                                <!-- Colonnes de liens -->
+                                <div class="footer-links-container">
+                                    <ul class="footer-links">
+                                        <li>
+                                            <strong>
+                                                <a href="#">Explorer</a>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <a href="#">Crée un compte</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Accueil</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Connexion</a>
+                                        </li>
+                                    </ul>
+                                    <ul class="footer-links">
+                                        <li>
+                                            <strong>
+                                                <a href="#">Ressource</a>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <a href="#">Contact</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Aide</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Adhérer à nos restaurants</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Icônes sociales sous le logo -->
+                            <div class="social-icons">
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </div>
+
+                            <!-- Copyright -->
+                            <p class="footer-copyright">&copy; 2025 Budgeat. Tous droits réservés.</p>
+                        </footer>
 </div>
 
 <script>
