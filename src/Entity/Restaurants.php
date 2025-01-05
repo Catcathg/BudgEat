@@ -22,6 +22,31 @@ class Restaurants
     private $nom;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $codePostal;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mail;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mdp;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
@@ -55,6 +80,66 @@ class Restaurants
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(int $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getMdp(): ?string
+    {
+        return $this->mdp;
+    }
+
+    public function setMdp(string $mdp): self
+    {
+        $this->mdp = $mdp;
+
         return $this;
     }
 
