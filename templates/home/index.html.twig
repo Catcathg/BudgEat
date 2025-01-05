@@ -262,19 +262,19 @@
 
 /* Footer */
 .footer {
-    background-color: #f9f9f9; /* Fond légèrement gris pour un look moderne */
-    color: #333333; /* Texte gris foncé */
-    padding: 40px 0; /* Plus d'espacement autour du footer pour aérer */
+    background-color: #f9f9f9; 
+    color: #333333; 
+    padding: 40px 0; 
     width: 100%;
-    text-align: left; /* Aligner le texte à gauche */
-    border-top: 1px solid #eee; /* Bordure subtile en haut */
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05); /* Ombre subtile pour plus de profondeur */
-    margin-top: 40px; /* Espacement entre le footer et les éléments au-dessus (par exemple, les cartes) */
+    text-align: left; 
+    border-top: 1px solid #eee; 
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 40px; 
 }
 
 .footer .footer-content {
     display: flex;
-    flex-wrap: wrap; /* Pour être plus réactif en cas d'écran plus petit */
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
     max-width: 1200px;
@@ -284,21 +284,21 @@
 
 .footer-logo {
     margin-right: 40px;
-    flex: 1 1 150px; /* Flexibilité sur les petits écrans */
+    flex: 1 1 150px; 
 }
 
 .footer-logo .logo {
-    width: 180px; /* Largeur du logo */
+    width: 180px; 
     height: auto;
 }
 
-/* Container pour les colonnes de liens */
+
 .footer-links-container {
     display: flex;
     gap: 40px;
     justify-content: space-between;
-    flex: 3 1 500px; /* Flexibilité sur les petits écrans */
-    flex-wrap: wrap; /* Les liens se réorganiseront sur les petits écrans */
+    flex: 3 1 500px; 
+    flex-wrap: wrap; 
 }
 
 .footer-links {
@@ -308,62 +308,59 @@
 }
 
 .footer-links li {
-    margin-bottom: 12px; /* Espacement plus grand entre les liens */
+    margin-bottom: 12px; 
 }
 
 .footer-links a {
-    color: #333333; /* Couleur des liens */
+    color: #333333; 
     text-decoration: none;
-    font-size: 1.1rem; /* Légèrement plus grand pour plus de lisibilité */
-    font-weight: 500; /* Mettre un peu de poids au texte */
+    font-size: 1.1rem; 
+    font-weight: 500; 
     transition: color 0.3s ease, padding-left 0.3s ease;
 }
 
 .footer-links a:hover {
-    color: #ffcc00; /* Couleur des liens au survol */
-    padding-left: 8px; /* Petit effet de décalage sur les liens au survol */
+    color: #ffcc00; 
+    padding-left: 8px; 
 }
 
 
 
-/* Icônes sociales sous le logo */
 .social-icons {
     display: flex;
     gap: 25px;
     align-items: center;
     justify-content: flex-start;
     margin-top: 30px;
-    flex: 1 1 180px; /* Espacement et flexibilité pour les petits écrans */
+    flex: 1 1 180px; 
 }
 
 .social-icon {
-    font-size: 36px; /* Augmenter la taille des icônes pour plus de visibilité */
+    font-size: 36px; 
     color: #333333;
     text-decoration: none;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #ffcc00; /* Couleur des icônes au survol */
-    transform: scale(1.1); /* Effet de zoom au survol pour un effet interactif */
+    color: #ffcc00; 
+    transform: scale(1.1); 
 }
 
-/* Footer copyright */
+
 .footer-copyright {
     margin-top: 30px;
     font-size: 14px;
     text-align: center;
-    color: #777; /* Gris clair pour le texte de copyright */
-    padding-top: 20px; /* Espacement avant le copyright */
-    border-top: 1px solid #eee; /* Une bordure discrète pour séparer */
+    color: #777;
+    padding-top: 20px; 
+    border-top: 1px solid #eee; 
 }
 
-/* Responsivité */
 @media (max-width: 768px) {
     .footer .footer-content {
         flex-direction: column;
-        text-align: center; /* Centrer le texte sur les petits écrans */
-    }
+        text-align: center; 
 
     .footer-links-container {
         justify-content: center;
@@ -371,7 +368,7 @@
     }
 
     .footer-logo {
-        margin: 0 auto 20px; /* Centrer le logo sur mobile */
+        margin: 0 auto 20px; 
     }
 
     .social-icons {
