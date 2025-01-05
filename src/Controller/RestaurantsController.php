@@ -2,19 +2,26 @@
 
 namespace App\Controller;
 
+use App\Repository\RestaurantsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class RestaurantsController extends AbstractController
 {
     /**
-     * @Route("/restaurants", name="app_restaurants")
+     * @Route("/restaurants", name="restaurants_list")
      */
-    public function index(): Response
+    public function list(RestaurantsRepository $restaurantsRepository): Response
     {
-        return $this->render('restaurants/index.html.twig', [
-            'controller_name' => 'RestaurantsController',
+        // Récupérer tous les restaurants
+        $restaurants = $restaurantsRepository->findAllRestaurants();
+
+        // Passer les données au template Twig
+        return $this->render('restaurants/list.html.twig', [
+            'restaurants' => $restaurants,
         ]);
     }
 }
+
