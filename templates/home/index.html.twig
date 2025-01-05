@@ -260,41 +260,47 @@
     .restaurant-card img{ width: 80%; height: 180px; border-radius: 10px; margin-bottom: 1rem; }
     .restaurant-card button, .budget-input button { margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 5px; background-color: #ffcc00; color: white; font-weight: bold; }
 
+/* Footer */
 .footer {
-    background-color: #ffffff; / Fond blanc /
-    color: rgb(0, 0, 0); / Texte noir /
-    padding: 20px 0; / Espacement autour du footer /
+    background-color: #f9f9f9; 
+    color: #333333; 
+    padding: 40px 0; 
     width: 100%;
-    text-align: left; / Aligner le texte à gauche dans tout le footer /
+    text-align: left; 
+    border-top: 1px solid #eee; 
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 40px; 
 }
 
 .footer .footer-content {
-    display: flex; / Utilisation de Flexbox pour aligner le contenu horizontalement /
-    align-items: flex-start; / Aligner les éléments en haut du footer /
-    justify-content: space-between; / Espacer le logo à gauche et les liens à droite /
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
 }
 
 .footer-logo {
-    margin-right: 40px; / Espacement entre le logo et les colonnes de liens /
+    margin-right: 40px;
+    flex: 1 1 150px; 
 }
 
 .footer-logo .logo {
-    width: 150px; / Largeur du logo /
-    height: auto; / Conserver les proportions /
+    width: 180px; 
+    height: auto;
 }
 
-/ Container pour les colonnes de liens /
+
 .footer-links-container {
     display: flex;
-    gap: 40px; / Espacement entre les colonnes de liens /
-    justify-content: flex-start; / Aligner les colonnes à gauche /
-    width: 100%; / Prendre toute la largeur du footer /
+    gap: 40px;
+    justify-content: space-between;
+    flex: 3 1 500px; 
+    flex-wrap: wrap; 
 }
 
-/ Liens dans chaque colonne /
 .footer-links {
     list-style: none;
     padding: 0;
@@ -302,53 +308,85 @@
 }
 
 .footer-links li {
-    margin-bottom: 10px; / Espacement entre les liens /
+    margin-bottom: 12px; 
 }
 
 .footer-links a {
-    color: #000000; / Couleur des liens /
-    text-decoration: none; / Supprimer le soulignement /
+    color: #333333; 
+    text-decoration: none;
+    font-size: 1.1rem; 
+    font-weight: 500; 
+    transition: color 0.3s ease, padding-left 0.3s ease;
 }
 
 .footer-links a:hover {
-    text-decoration: underline; / Ajouter un soulignement au survol /
+    color: #ffcc00; 
+    padding-left: 8px; 
 }
 
-/ Icônes sociales sous le logo, alignées à droite et plus grandes /
+
+
 .social-icons {
-    display: flex; / Utilisation de Flexbox pour aligner horizontalement les icônes /
-    gap: 20px; / Espacement entre les icônes /
-    align-items: center; / Centrer verticalement les icônes /
-    margin-top: 30px; / Augmenter l'espacement au-dessus des icônes /
-    justify-content: flex-end; / Aligner les icônes à droite /
-    height: 60px; / Augmenter la hauteur du conteneur des icônes /
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 30px;
+    flex: 1 1 180px; 
 }
 
-/ Style pour les icônes sociales /
 .social-icon {
-    font-size: 32px; / Augmenter la taille des icônes /
-    color: #000000; / Couleur des icônes /
-    text-decoration: none; / Supprimer le soulignement des liens /
+    font-size: 36px; 
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #fdce54; / Couleur au survol des icônes /
+    color: #ffcc00; 
+    transform: scale(1.1); 
 }
 
-/ Ajuster l'espacement entre les icônes pour qu'elles soient bien positionnées /
-.social-icons a {
-    display: flex;
-    align-items: center; / Aligner les icônes verticalement dans leur espace /
-    justify-content: center; / Centrer les icônes horizontalement /
-    height: 100%; / Prendre toute la hauteur disponible dans le conteneur /
-}
 
-/ Footer copyright /
 .footer-copyright {
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 14px;
-    text-align: center; / Aligner le texte du copyright à gauche */
+    text-align: center;
+    color: #777;
+    padding-top: 20px; 
+    border-top: 1px solid #eee; 
 }
+
+@media (max-width: 768px) {
+    .footer .footer-content {
+        flex-direction: column;
+        text-align: center; 
+
+    .footer-links-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        margin: 0 auto 20px; 
+    }
+
+    .social-icons {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .footer-links {
+        margin-bottom: 20px;
+    }
+
+    .footer-copyright {
+        margin-top: 40px;
+        font-size: 12px;
+    }
+}
+
+
 
     
 </style>
@@ -437,7 +475,7 @@
                                 class="footer-content">
                                 <!-- Logo -->
                                 <div class="footer-logo">
-                                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+                                    <img src="/assets/logo.png"" alt="Logo" class="logo">
                                 </div>
 
                                 <!-- Colonnes de liens -->
