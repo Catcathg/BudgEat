@@ -57,50 +57,55 @@
         margin-top : 0px;
     }
 
-  .alert{
+    .alert{
     margin-bottom : 5%;
-  }
+    }
 
 </style>
 
 <div class = "princiaplContenair">
 
-  <h1>Connectez-vous pour découvrir les meilleurs offres</h1>
+    <h1>Bienvenue chez les meilleurs Restaurateurs de BudgEat</h1>
 
+    <!-- Conteneur Flexbox pour le logo à gauche et le formulaire à droite -->
+    <div class="container">
+        <!-- Logo à gauche -->
+        <div class="logo">
+            <img src="/assets/logo.png" alt="Logo">
+        </div>
 
-  <!-- Conteneur Flexbox pour le logo à gauche et le formulaire à droite -->
-  <div class="container">
-      <!-- Logo à gauche -->
-      <div class="logo">
-          <img src="/assets/logo.png" alt="Logo">
-      </div>
-
-      <!-- Formulaire à droite -->
-      <form method="POST" action="{{ path('app_login') }}">
-          <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Adresse Mail</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp" required>
-              <div id="emailHelp" class="form-text">Votre adresse mail restera confidentielle.</div>
-          </div>
-          <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" name="mdp" required>
-          </div>
-          <button type="submit" class="btn btn-primary" id="marginTopNull">Se connecter</button>
-
-          <!-- Affichage des messages d'erreur -->
-          {% for message in app.flashes('error') %}
-            <div class="mb-3" id="marginTopNull">
-                <div class="alert alert-danger">
-                    {{ message }}
-                </div>
+        <!-- Formulaire à droite -->
+        <form method="POST" action="{{ path('app_login') }}">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Adresse Mail</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp" required>
+                <div id="emailHelp" class="form-text">Votre adresse mail restera confidentielle.</div>
             </div>
-          {% endfor %}
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="mdp" required>
+            </div>
 
-      </form>
+            
+
+            <button type="submit" class="btn btn-primary" id="marginTopNull">Se connecter</button>
+
+            <!-- Affichage des messages d'erreur -->
+            {% for message in app.flashes('error') %}
+                <div class="mb-3" id="marginTopNull">
+                    <div class="alert alert-danger">
+                    {{ message }}
+                    </div>
+                </div>
+                
+            {% endfor %}
+
+        </form>
+    </div>
 
 
-  </div>
 
 </div>
+
+
 {% endblock %}

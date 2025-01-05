@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription Restaurateurs{% endblock %}
+
+{% block body %}
+<style>
+    form {
+        margin: 2%;
+        border: black solid 1px;
+        border-radius: 5px;
+        width: 50%; /* Réduit la largeur du formulaire */
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between; /* Place les éléments aux extrémités gauche et droite */
+        align-items: center; /* Aligne les éléments verticalement au centre */
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40%; /* Réduit la largeur du logo */
+        height: auto;
+        max-height: 80vh; /* Assure que l'image ne dépasse pas 80% de la hauteur de la fenêtre */
+    }
+
+    .logo img {
+        width: 100%; /* Image occupe toute la largeur du conteneur */
+        height: auto; /* Garde les proportions */
+        max-width: 100%; /* Empêche l'image de dépasser le conteneur */
+        max-height: 80vh; /* Empêche l'image de dépasser 80% de la hauteur de la fenêtre */
+    }
+
+    .mb-3, button {
+        margin: 50px;
+    }
+
+    .btn  {
+        background-color: #ffcc00;
+        border: #ffcc00;
+        font-weight: bold;
+    }
+
+    .princiaplContenair{
+        /*margin-top: 90px;*/
+        margin : auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .princiaplContenair{
+        /*margin-top: 90px;*/
+        margin : auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+</style>
+
+<div class = "princiaplContenair">
+
+    <h1>Faites parti de notre élite !</h1>
+
+    <div class="container">
+        <!-- Logo à gauche -->
+        <div class="logo">
+            <img src="/assets/logo.png" alt="Logo">
+        </div>
+
+        <!-- Formulaire à droite -->
+        
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.adresse, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.adresse) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.ville, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.ville) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.codePostal, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.codePostal, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.codePostal) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.mail, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.mail, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.mail) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.mdp, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.mdp, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.mdp) }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+
+            {{ form_end(form) }}
+        
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}

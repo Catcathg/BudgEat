@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Clients;
+use App\Entity\Restaurants;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class ConnexionController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="app_login")
+     * @Route("/clients/connexion", name="app_login")
      */
     public function login(Request $request, EntityManagerInterface $em): Response
     {
@@ -100,4 +101,49 @@ class ConnexionController extends AbstractController
         // Rediriger vers la page de connexion
         return $this->redirectToRoute('app_login');
     }
+
+
+
+    // coté restaurateurs :
+
+    /**
+     * @Route("/restaurants/connexion", name="app_login_restaurants")
+     */
+    public function loginRestaurant(Request $request, EntityManagerInterface $em): Response
+    {
+        // Si l'utilisateur est déjà connecté, on le redirige vers le tableau de bord
+        if ($this->getUser()) {
+            return $this->redirectToRoute('dashboard');//a changé pour dashboard restaurant (Milena)
+        }
+
+        // Récupérer l'email et le mot de passe soumis
+        $mail = $request->request->get('mail');
+        $mdp = $request->request->get('mdp');
+
+        // Recherche du client par email dans la base de données
+        $restaurants = $em->getRepository(Restaurants::class)->findOneBy(['mail' => $mail]);
+
+        // Si un client est trouvé et que les mots de passe correspondent
+        if ($restaurants && $mdp === $restaurants->getMdp()) {
+            // L'utilisateur est authentifié, on gère la session
+            $session = $request->getSession  ();
+            $session->set('user_id', $restaurants->getId()); // Sauvegarder l'ID de l'utilisateur dans la session
+            //$session->set('user_role', $restaurants->getRole()); // Sauvegarder le rôle de l'utilisateur dans la session
+
+            /*
+            // Rediriger l'utilisateur vers le tableau de bord en fonction de son rôle
+            if ($restaurants->getRole() === 1) {
+                return $this->render('dashboard/index.html.twig');
+            } elseif ($restaurants->getRole() === 2) {
+                return $this->render('dashboard/admin.html.twig');
+            }*/
+        } else {
+            // Email ou mot de passe incorrect
+            $this->addFlash('error', 'Email ou mot de passe incorrect');
+        }
+
+        // Rendu du formulaire de connexion
+        return $this->render('connexion/restaurants.html.twig');
+    }
+
 }
