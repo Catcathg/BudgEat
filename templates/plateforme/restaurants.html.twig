@@ -1,20 +1,531 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PlateformeController!{% endblock %}
+{% block title %}Restaurateurs - BudgEat{% endblock %}
 
 {% block body %}
+
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+    /* Navbar */
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1rem;
+        background-color: #fff;
+        border-bottom: 2px solid #ffcc00;
+    }
+    .navbar .logo img {
+        height: 150px;
+    }
+    .navbar ul {
+        list-style: none;
+        display: flex;
+        gap: 5rem;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+    .navbar .buttons a {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .navbar .btn-login {
+        background-color: white;
+        color: #ffcc00;
+        border: 2px solid #ffcc00;
+        margin: 2rem;
+    }
+    .navbar .btn-signup {
+        background-color: #ffcc00;
+        color: white;
+        border: 2px solid #ffcc00;
+    }
+
+    /* Hero Section */
+    .hero {
+        display: flex;
+        background-color: #ffcc00;
+        padding: 2rem;
+        color: #333;
+        flex-direction : row;
+        justify-content: space-around;
+    }
+    .hero-content {
+        max-width: 50%;
+        padding: 0 4.5rem;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+    /* Conteneur principal du carrousel */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Limite la largeur */
+    margin: 0 auto; /* Centré horizontalement */
+    overflow: hidden; /* Cache les images non visibles */
+    border-radius: 10px; /* Arrondi les bords du carrousel */
+}
+
+/* Images dans le carrousel */
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Animation de défilement */
+}
+
+.carousel-images img {
+    width: 100%;
+    flex-shrink: 0; /* Empêche le rétrécissement des images */
+    object-fit: cover; /* Maintient les proportions de l'image */
+    height: 300px;
+}
+
+/* Boutons de navigation */
+.carousel-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none; /* Empêche les boutons de bloquer le clic sur les images */
+}
+
+.carousel-buttons button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    pointer-events: auto; /* Active le clic pour les boutons */
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Changement de couleur au survol */
+}
+
+/* Indicateurs (petits points) */
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-indicators span {
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-indicators span.active {
+    background-color: #333;
+}
+
+    /* BudgEat and Restaurants */
+    .budget, .restaurants {
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .budget {
+        text-align: center;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+    }
+    
+    .budget h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .budget-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .budget-btn {
+        background-color: #ffcc00;
+        color: white;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .budget-btn:hover {
+        background-color: #e6b800;
+    }
+    
+    #budget-display {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        width: 80px;
+        border: 2px solid #ffcc00;
+        border-radius: 5px;
+        padding: 5px;
+        color: #333;
+        background-color: #fff;
+        pointer-events: none; /* Rend le champ non éditable */
+    }
+    
+    .btn-login {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-login:hover {
+        background-color: #ffcc00;
+        color: white;
+    }
+    
+    .btn-signup:hover {
+        background-color:white;
+        color:#ffcc00;
+    }
+
+    .hess {
+        display: flex;
+        justify-content: center; /* Centre horizontalement */
+        align-items: center; /* Aligne verticalement */
+        position: relative; /* Nécessaire pour positionner le bouton à droite */
+    }
+    
+    .hess h2 {
+        margin: 0; /* Supprime les marges par défaut */
+        font-size: 1.5rem;
+        color: #333;
+        text-align: center;
+        flex-grow: 1; /* Permet à l'élément de prendre tout l'espace restant */
+    }
+    
+    .hess button {
+        position: absolute;
+        right: 0; /* Place le bouton à droite */
+        background-color: #ffcc00;
+        color: #fff;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+    }
+    
+    .hess button:hover {
+        background-color: #e6b800; /* Couleur au survol */
+    }
+    
+    .restaurants { padding: 2rem; text-align: center; }
+    .restaurants h2 { margin-bottom: 2rem; }
+    .restaurant-list { display: flex; gap: 1rem; justify-content: center; }
+    .restaurant-card { background-color: #fff; border: 1px solid #ddd; border-radius: 10px; width: 200px; text-align: center; padding: 1rem; }
+    .restaurant-card img{ width: 80%; height: 180px; border-radius: 10px; margin-bottom: 1rem; }
+    .restaurant-card button, .budget-input button { margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 5px; background-color: #ffcc00; color: white; font-weight: bold; }
+
+/* Footer */
+.footer {
+    background-color: #f9f9f9; 
+    color: #333333; 
+    padding: 40px 0; 
+    width: 100%;
+    text-align: left; 
+    border-top: 1px solid #eee; 
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 40px; 
+}
+
+.footer .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footer-logo {
+    margin-right: 40px;
+    flex: 1 1 150px; 
+}
+
+.footer-logo .logo {
+    width: 180px; 
+    height: auto;
+}
+
+
+.footer-links-container {
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+    flex: 3 1 500px; 
+    flex-wrap: wrap; 
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px; 
+}
+
+.footer-links a {
+    color: #333333; 
+    text-decoration: none;
+    font-size: 1.1rem; 
+    font-weight: 500; 
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #ffcc00; 
+    padding-left: 8px; 
+}
+
+
+
+.social-icons {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 30px;
+    flex: 1 1 180px; 
+}
+
+.social-icon {
+    font-size: 36px; 
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #ffcc00; 
+    transform: scale(1.1); 
+}
+
+
+.footer-copyright {
+    margin-top: 30px;
+    font-size: 14px;
+    text-align: center;
+    color: #777;
+    padding-top: 20px; 
+    border-top: 1px solid #eee; 
+}
+
+@media (max-width: 768px) {
+    .footer .footer-content {
+        flex-direction: column;
+        text-align: center; 
+
+    .footer-links-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        margin: 0 auto 20px; 
+    }
+
+    .social-icons {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .footer-links {
+        margin-bottom: 20px;
+    }
+
+    .footer-copyright {
+        margin-top: 40px;
+        font-size: 12px;
+    }
+}
+}
+
+#myChart{
+    width: 50%;  /* Taille responsive */
+    height: 50%;
+}
+
+    
 </style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">
+        <a href="/"><img src="/assets/logo.png" alt="BudgEat Logo"></a >
+    </div>
     <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/symfony/BudgEat/src/Controller/PlateformeController.php'|file_link(0) }}">src/Controller/PlateformeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/symfony/BudgEat/templates/plateforme/index.html.twig'|file_link(0) }}">templates/plateforme/index.html.twig</a></code></li>
+        <li><a href="/restaurants">Restaurants</a ></li>
+        <li><a href="/contact">Contact</a ></li>
     </ul>
+    <div class="buttons">
+        <a href="/clients/connexion" class="btn-login">Connexion</a >
+        <a href="/clients/inscription" class="btn-signup">Inscription</a >
+    </div>
 </div>
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Abonnez-vous pour faire parti de la meilleure communauté</h1>
+    <div>
+        S'abonner
+    </div>
+</div>
+
+<!--Gerer : IF abonner afficher dashboard-->
+
+<div>
+
+    
+    <canvas id="myChart"></canvas>
+
+    
+
+</div>
+    <!-- Footer -->
+                        <footer class="footer">
+                            <div
+                                class="footer-content">
+                                <!-- Logo -->
+                                <div class="footer-logo">
+                                    <img src="/assets/logo.png" alt="Logo" class="logo">
+                                </div>
+
+                                <!-- Colonnes de liens -->
+                                <div class="footer-links-container">
+                                    <ul class="footer-links">
+                                        <li>
+                                            <strong>
+                                                <a href="#">Explorer</a>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <a href="#">Crée un compte</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Accueil</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Connexion</a>
+                                        </li>
+                                    </ul>
+                                    <ul class="footer-links">
+                                        <li>
+                                            <strong>
+                                                <a href="#">Ressource</a>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <a href="#">Contact</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Aide</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Adhérer à nos restaurants</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Icônes sociales sous le logo -->
+                            <div class="social-icons">
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="#" class="social-icon">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </div>
+
+                            <!-- Copyright -->
+                            <p class="footer-copyright">&copy; 2025 Budgeat. Tous droits réservés.</p>
+                        </footer>
+</div>
+
+<script>
+
+
+    //chart.js
+    document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Sales Data',
+                        data: [12, 19, 3, 5, 2, 3, 7],
+                        borderColor: 'rgb(75, 192, 192)',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                    
+                }
+            });
+        });
+
+   
+</script>
 {% endblock %}
