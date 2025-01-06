@@ -186,4 +186,5 @@ class Restaurants
         $this->prix_minimum = $prix_minimum;
         return $this;
     }
+    
 }
