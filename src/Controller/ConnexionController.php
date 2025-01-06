@@ -91,17 +91,17 @@ class ConnexionController extends AbstractController
 
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/logout", name="app_logout", methods={"GET"})
      */
-    public function logout(Request $request): Response
+    public function logout()
     {
         // Supprimer les informations de la session
-        $session = $request->getSession();
+        /*$session = $request->getSession();
         $session->remove('user_id');
         $session->remove('user_role');
 
         // Rediriger vers la page de connexion
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_login');*/
     }
 
 

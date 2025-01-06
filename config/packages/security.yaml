@@ -34,6 +34,7 @@ security:
             logout:
                 path: app_logout
                 target: /
+                invalidate_session: true
             # Ajouter des règles de sécurité sur les pages
             provider: restaurants_provider
             # Si l'utilisateur est non authentifié, il sera redirigé vers la page de login
