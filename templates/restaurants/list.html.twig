@@ -36,7 +36,7 @@
                 <p>Prix minimum : {{ restaurant.PrixMinimum}} €</p >
                 <p>{{ restaurant.rating }} ★ - {{ restaurant.distance }}</p >
                 <div class="card-buttons">
-                    <button class="btn-menu">Voir plus</button>
+                    <a href="{{ path('restaurant_map', { 'id': restaurant.id }) }}"><button class="btn-menu">Voir plus</button></a>
                     <button class="btn-trajet">Trajet</button>
                 </div>
             </div>
