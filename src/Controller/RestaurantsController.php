@@ -133,4 +133,55 @@ class RestaurantsController extends AbstractController
              'login_url' => $this->generateUrl('app_login'),
          ]);
      }
+
+     **
+     * @Route("/restaurants/filtre_ville_budgeat", name="filter_restaurants_by_ville_budgeat", methods={"GET"})
+     */
+    public function FiltreBudgeatVille(Request $request)
+    {
+        $budget = $request->query->get('budget');
+        $ville = $request->query->get('ville');
+
+        // Récupération de tous les restaurants en fonction des critères
+        $queryBuilder = $this->getDoctrine()->getRepository(Restaurants::class)->createQueryBuilder('r');
+
+        if ($budget) {
+            $queryBuilder->andWhere('r.prix_minimum <= :budget')
+                ->setParameter('budget', $budget);
+        }
+
+        if ($ville) {
+            $queryBuilder->andWhere('r.ville = :ville')
+                ->setParameter('ville', $ville);
+        }
+
+        $restaurants = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('restaurants/list.html.twig', [
+            'restaurants' => $restaurants,
+            'budget' => $budget,
+        ]);
+    }
+
+    /**
+     * @Route("/restaurants/filtre_ville", name="filter_restaurants_by_ville", methods={"GET"})
+     */
+    public function FiltreVille(Request $request)
+    {
+        $ville = $request->query->get('ville'); 
+
+        $queryBuilder = $this->getDoctrine()->getRepository(Restaurants::class)->createQueryBuilder('r');
+
+        if ($ville) {
+            $queryBuilder->andWhere('r.ville = :ville')
+                ->setParameter('ville', $ville);
+        }
+
+        $restaurants = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('restaurants/index.html.twig', [
+            'restaurants' => $restaurants,
+            'selectedVille' => $ville, 
+        ]);
+    }
 }
