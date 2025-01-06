@@ -1,5 +1,4 @@
 <?php
-
 // src/Controller/MapController.php
 
 namespace App\Controller;
@@ -43,13 +42,12 @@ class MapController extends AbstractController
         $data = $response->toArray();
 
         // Si l'API retourne des résultats, on récupère la latitude et la longitude
-        if (!empty($data)) {
-            $latitude = $data[0]['lat'] ?? null;
-            $longitude = $data[0]['lon'] ?? null;
+        if (!empty($data) && isset($data[0]['lat'], $data[0]['lon'])) {
+            $latitude = $data[0]['lat'];
+            $longitude = $data[0]['lon'];
         } else {
-            // Si aucun résultat trouvé, on attribue des valeurs par défaut ou gérer l'erreur
-            $latitude = null;
-            $longitude = null;
+            // Si aucune coordonnée n'est trouvée, on lance une exception
+            throw $this->createNotFoundException('Coordonnées non trouvées pour l\'adresse du restaurant');
         }
 
         // Passer les données au template

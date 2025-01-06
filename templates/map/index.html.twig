@@ -334,16 +334,22 @@
         © 2025 BudgEat. Tous droits réservés.
     </div>
 </footer>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script>
-    var map = L.map('map').setView([{{ commander.latitude|default(48.8566) }}, {{ commander.longitude|default(2.3522) }}], 13);
+    // Vérifier que les coordonnées sont disponibles, sinon afficher une erreur
+    var latitude = {{ latitude }};
+    var longitude = {{ longitude }};
+    
+    // Créer la carte avec Leaflet
+    var map = L.map('map').setView([latitude, longitude], 13);
 
+    // Ajouter les tuiles OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    L.marker([{{ commander.latitude|default(48.8566) }}, {{ commander.longitude|default(2.3522) }}]).addTo(map)
+    // Ajouter un marqueur pour le restaurant
+    L.marker([latitude, longitude]).addTo(map)
         .bindPopup("{{ commander.nom }}")
         .openPopup();
 </script>
