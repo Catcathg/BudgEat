@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class RestaurantsController extends AbstractController
 {
-    
+
     /**
      * @Route("/restaurants", name="restaurants_list")
      */
@@ -34,7 +34,7 @@ class RestaurantsController extends AbstractController
     public function filterByBudget(Request $request, RestaurantsRepository $repository): Response
     {
         // Récupérer le budget soumis par l'utilisateur
-        $budget = $request->query->get('budget', 0); // Valeur par défaut : 0
+        $budget = $request->query->get('budget', 0);
 
         // Rechercher les restaurants dont le prix minimum est inférieur ou égal au budget
         $restaurants = $repository->createQueryBuilder('r')
@@ -53,40 +53,83 @@ class RestaurantsController extends AbstractController
      * @Route("/restaurants/inscription", name="app_restaurants_form_inscription")
      */
 
-     public function inscription(Request $request, EntityManagerInterface $em): Response
-     {
-         // Crée une nouvelle instance de ton entité Clients
-         $restaurants = new Restaurants();
- 
-         // Crée le formulaire basé sur ta classe ClientFormInscription
-         $form = $this->createForm(RestaurantsFormInscriptionType::class, $restaurants);
- 
-         // Gère la requête et la soumission du formulaire
-         $form->handleRequest($request);
- 
-         // Si le formulaire est soumis et valide, sauvegarde les données
-         if ($form->isSubmitted() && $form->isValid()) {
-             $em->persist($restaurants);
-             $em->flush();
- 
-             // Redirige vers une autre page ou affiche un message
-             return $this->redirectToRoute('inscription_success');
-         }
- 
-         // Affiche le formulaire dans le template
-         return $this->render('restaurants/inscription.html.twig', [
-             'form' => $form->createView(),
-         ]);
-     }
- 
-     /**
-      * @Route("/inscriptionSuccess", name="inscription_success")
-      */
-     public function success(): Response
-     {
-         return $this->render('restaurants/success.html.twig', [
-             'message' => 'Nouveau compte ajouté avec succès !',
-             'login_url' => $this->generateUrl('app_login'),
-         ]);
-     }
+    public function inscription(Request $request, EntityManagerInterface $em): Response
+    {
+        $restaurants = new Restaurants();
+
+        $form = $this->createForm(RestaurantsFormInscriptionType::class, $restaurants);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($restaurants);
+            $em->flush();
+
+            return $this->redirectToRoute('inscription_success');
+        }
+
+        return $this->render('restaurants/inscription.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/restaurants/filter-by-ville", name="filter_restaurants_by_ville", methods={"GET"})
+     */
+    public function filterByVille(Request $request, RestaurantsRepository $repository): Response
+    {
+        // Récupérer la ville soumise par l'utilisateur
+        $ville = $request->query->get('ville', '');
+
+        // Rechercher les restaurants dont la ville correspond à celle sélectionnée
+        $queryBuilder = $repository->createQueryBuilder('r');
+
+        // Si une ville est spécifiée, filtrer par ville
+        if ($ville) {
+            $queryBuilder->where('r.ville LIKE :ville')
+                ->setParameter('ville', '%' . $ville . '%');
+        }
+
+        // Exécuter la requête et récupérer les résultats
+        $restaurants = $queryBuilder->getQuery()->getResult();
+
+        // Retourner la vue avec les restaurants filtrés par ville
+        return $this->render('restaurants/index.html.twig', [
+            'restaurants' => $restaurants,
+            'ville' => $ville,
+        ]);
+    }
+
+    /**
+     * @Route("/restaurants/filter/filter-by-ville", name="filter_restaurants_by_ville_budgeat", methods={"GET"})
+     */
+    public function filterByVilleBudgeat(Request $request, RestaurantsRepository $repository): Response
+    {
+        $budget = $request->query->get('budget');
+        $ville = $request->query->get('ville');
+
+        // Récupération de tous les restaurants en fonction des critères
+        $queryBuilder = $this->getDoctrine()->getRepository(Restaurants::class)->createQueryBuilder('r');
+
+        if ($budget) {
+            $queryBuilder->andWhere('r.prix_minimum <= :budget')
+                ->setParameter('budget', $budget);
+        }
+
+        if ($ville) {
+            $queryBuilder->andWhere('r.ville = :ville')
+                ->setParameter('ville', $ville);
+        }
+
+        $restaurants = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('restaurants/list.html.twig', [
+            'restaurants' => $restaurants,
+            'budget' => $budget,
+        ]);
+    }
+
+
+
+
 }

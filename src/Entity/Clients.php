@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use App\Repository\ClientsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ClientsRepository::class)
  */
-class Clients
+class Clients implements PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -124,5 +126,27 @@ class Clients
         $this->budget = $budget;
 
         return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->mail;  // Utilise l'email comme identifiant pour l'utilisateur
+    }
+
+    public function getPassword(): string
+    {
+        return $this->mdp;  // Retourne le mot de passe haché
+    }
+
+
+    public function getSalt(): ?string
+    {
+        // Si tu utilises bcrypt ou argon2, pas besoin de salt
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Effacer toute information sensible (ex : token, mot de passe en clair)
     }
 }
