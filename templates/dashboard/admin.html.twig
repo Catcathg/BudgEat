@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de Bord Administrateur{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur le tableau de bord administrateur !</h1>
+    <p>Vous avez accès à toutes les fonctionnalités d'administration.</p>
+
+    {# Formulaire de déconnexion #}
+    <form action="{{ path('app_logout_restaurants') }}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Se déconnecter</button>
+    </form>
+{% endblock %}

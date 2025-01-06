@@ -201,6 +201,7 @@ class Restaurants implements UserInterface
         $this->prix_minimum = $prix_minimum;
         return $this;
     }
+    
 
     public function getUserIdentifier(): string
     {

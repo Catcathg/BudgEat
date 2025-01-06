@@ -43,7 +43,7 @@ class RestaurantsController extends AbstractController
     public function filterByBudget(Request $request, RestaurantsRepository $repository): Response
     {
         // Récupérer le budget soumis par l'utilisateur
-        $budget = $request->query->get('budget', 0); // Valeur par défaut : 0
+        $budget = $request->query->get('budget', 0);
 
         // Rechercher les restaurants dont le prix minimum est inférieur ou égal au budget
         $restaurants = $repository->createQueryBuilder('r')
@@ -95,12 +95,13 @@ class RestaurantsController extends AbstractController
     /**
      * @Route("/restaurants/inscription", name="app_restaurants_form_inscription")
      */
+
      public function inscription(Request $request, EntityManagerInterface $em): Response
      {
-         // Crée une nouvelle instance de ton entité Restaurants
+         // Crée une nouvelle instance de ton entité Clients
          $restaurants = new Restaurants();
  
-         // Crée le formulaire basé sur ta classe RestaurantsFormInscriptionType
+         // Crée le formulaire basé sur ta classe ClientFormInscription
          $form = $this->createForm(RestaurantsFormInscriptionType::class, $restaurants);
  
          // Gère la requête et la soumission du formulaire
@@ -108,11 +109,6 @@ class RestaurantsController extends AbstractController
  
          // Si le formulaire est soumis et valide, sauvegarde les données
          if ($form->isSubmitted() && $form->isValid()) {
-             // Hache le mot de passe avec le service d'encodeur
-             $hashedPassword = $this->passwordEncoder->encodePassword($restaurants, $restaurants->getMdp());
-             $restaurants->setMdp($hashedPassword);
- 
-             // Persiste les données en base
              $em->persist($restaurants);
              $em->flush();
  
@@ -126,8 +122,7 @@ class RestaurantsController extends AbstractController
              'form' => $form->createView(),
          ]);
      }
-
-
+ 
      /**
       * @Route("/inscriptionSuccessRestaurants", name="inscription_success_restaurants")
       */

@@ -25,10 +25,9 @@ class ClientsController extends AbstractController
     /**
      * @Route("/clients/inscription", name="app_customer_form_inscription")
      */
-
-    public function inscription(Request $request, EntityManagerInterface $em): Response
+    public function inscription(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
-        // Crée une nouvelle instance de ton entité Clients
+        // Crée une nouvelle instance de l'entité Clients
         $clients = new Clients();
 
         // Crée le formulaire basé sur ta classe ClientFormInscription
@@ -37,7 +36,7 @@ class ClientsController extends AbstractController
         // Gère la requête et la soumission du formulaire
         $form->handleRequest($request);
 
-        // Si le formulaire est soumis et valide, sauvegarde les données
+        // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $this->passwordEncoder->encodePassword($clients, $clients->getMdp());
             $clients->setMdp($hashedPassword);
@@ -49,7 +48,7 @@ class ClientsController extends AbstractController
             return $this->redirectToRoute('inscription_success_clients');
         }
 
-        // Affiche le formulaire dans le template
+        // Si le formulaire n'est pas valide, affiche le formulaire avec les erreurs
         return $this->render('clients/inscription.html.twig', [
             'form' => $form->createView(),
         ]);
