@@ -88,14 +88,15 @@
           </div>
           <button type="submit" class="btn btn-primary" id="marginTopNull">Se connecter</button>
 
-          <!-- Affichage des messages d'erreur -->
-          {% for message in app.flashes('error') %}
-            <div class="mb-3" id="marginTopNull">
-                <div class="alert alert-danger">
-                    {{ message }}
+            <!-- Affichage des messages d'erreur -->
+            {% if error %}
+                <div class="mb-3" id="marginTopNull">
+                    <div class="alert alert-danger">
+                        <!--{{ error.messageKey|trans(error.messageData, 'security') }}-->
+                        E-mail ou mot de passe incorrects.
+                    </div>
                 </div>
-            </div>
-          {% endfor %}
+            {% endif %}
 
       </form>
 

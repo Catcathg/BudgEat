@@ -17,8 +17,9 @@ class ConnexionController extends AbstractController
     /**
      * @Route("/clients/connexion", name="app_login")
      */
-    public function login(Request $request, EntityManagerInterface $em): Response
+    public function login(Request $request, EntityManagerInterface $em, AuthenticationUtils $authenticationUtils): Response
     {
+        /*
         // Si l'utilisateur est déjà connecté, on le redirige vers le tableau de bord
         if ($this->getUser()) {
             return $this->redirectToRoute('dashboard');
@@ -50,45 +51,16 @@ class ConnexionController extends AbstractController
         }
 
         // Rendu du formulaire de connexion
-        return $this->render('connexion/index.html.twig');
+        return $this->render('connexion/index.html.twig');*/
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        // Afficher la vue avec les informations
+        return $this->render('connexion/index.html.twig', [
+            'error' => $error,  // Erreur de connexion (s'il y en a)
+        ]);
     }
-
-    /**
-     * @Route("/dashboard", name="dashboard")
-     */
-    public function dashboard(Request $request): Response
-    {
-        // Récupérer les informations de l'utilisateur depuis la session
-        $session = $request->getSession();
-        $role = $session->get('user_role');
-
-        // Vérification du rôle pour accéder à cette page
-        if ($role !== 1) {
-            // Redirection si l'utilisateur n'est pas un client
-            return $this->redirectToRoute('unauthorized');
-        }
-
-        return $this->render('dashboard/index.html.twig');
-    }
-
-    /**
-     * @Route("/admin-dashboard", name="admin_dashboard")
-     */
-    public function adminDashboard(Request $request): Response
-    {
-        // Récupérer les informations de l'utilisateur depuis la session
-        $session = $request->getSession();
-        $role = $session->get('user_role');
-
-        // Vérification du rôle pour accéder à l'admin dashboard
-        if ($role !== 2) {
-            // Redirection si l'utilisateur n'est pas un administrateur
-            return $this->redirectToRoute('unauthorized');
-        }
-
-        return $this->render('dashboard/admin.html.twig');
-    }
-
 
     /**
      * @Route("/logout", name="app_logout", methods={"GET"})
@@ -103,8 +75,6 @@ class ConnexionController extends AbstractController
         // Rediriger vers la page de connexion
         return $this->redirectToRoute('app_login');*/
     }
-
-
 
     // coté restaurateurs :
 

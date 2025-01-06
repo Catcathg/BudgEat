@@ -118,7 +118,7 @@ class RestaurantsController extends AbstractController
  
              // Message de succès
              $this->addFlash('success', 'Inscription réussie !');
-             return $this->redirectToRoute('inscription_success');
+             return $this->redirectToRoute('inscription_success_restaurants');
          }
  
          // Affiche le formulaire dans le template
@@ -129,7 +129,7 @@ class RestaurantsController extends AbstractController
 
 
      /**
-      * @Route("/inscriptionSuccess", name="inscription_success")
+      * @Route("/inscriptionSuccessRestaurants", name="inscription_success_restaurants")
       */
      public function success(): Response
      {
