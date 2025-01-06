@@ -24,6 +24,25 @@
             margin: 0;
         }
 
+        .container img {
+            display: block;      
+            margin-left: auto;   
+            margin-right: auto;  
+            width: 100%;         
+            max-width: 150px;   
+        }
+
+        .container .commander-title  {
+            display:flex;
+            justify-content:center;
+        }
+        
+        .rating {
+            display:flex;
+            justify-content:center;
+            margin: 10px;
+        }
+
         /* Navbar */
         .navbar {
             display: flex;
@@ -251,9 +270,10 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <a href="/"><img src="/assets/logo.png" alt="BudgEat Logo"></a>
+        <a href="/"><img src="/assets/logo-budgeat.png" alt="BudgEat Logo"></a>
     </div>
     <ul>
+        <li><a href="/">Home</a></li>
         <li><a href="/restaurants">Restaurants</a></li>
         <li><a href="/contact">Contact</a></li>
     </ul>
@@ -266,6 +286,7 @@
 <!-- Main Content -->
 <div class="container">
     <div class="commander-title">{{ commander.nom }}</div>
+    <img src="{{ asset('assets/' ~ commander.image) }}" alt="{{ commander.nom }}">
     <div class="rating">
         {% if commander.rating %}
             <div class="rating-stars">
@@ -288,7 +309,7 @@
         </div>
         <div>
             📍 Adresse<br>
-            <span>{{ commander.adresse }}, {{ commander.ville }} {{ commander.codePostal }}</span>
+            <span>{{ commander.adresse }}</span>
         </div>
         <div>
             💵 Prix minimum<br>
