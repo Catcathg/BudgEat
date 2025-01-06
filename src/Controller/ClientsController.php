@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Clients;
@@ -9,19 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ClientsController extends AbstractController
 {
-
-    private $passwordEncoder;
-
-    // Injecte le service d'encodeur de mot de passe dans le constructeur
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->passwordEncoder = $passwordEncoder;
-    }
-
     /**
      * @Route("/clients/inscription", name="app_customer_form_inscription")
      */
@@ -30,7 +20,7 @@ class ClientsController extends AbstractController
         // Crée une nouvelle instance de l'entité Clients
         $clients = new Clients();
 
-        // Crée le formulaire basé sur ta classe ClientFormInscription
+        // Crée le formulaire basé sur la classe ClientFormInscription
         $form = $this->createForm(ClientFormInscription::class, $clients);
 
         // Gère la requête et la soumission du formulaire
@@ -38,9 +28,18 @@ class ClientsController extends AbstractController
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $this->passwordEncoder->encodePassword($clients, $clients->getMdp());
+            // Validation du mot de passe ici, si nécessaire (en plus des contraintes form)
+            $password = $clients->getMdp();
+
+            // Si vous voulez appliquer des validations supplémentaires au mot de passe avant le hachage:
+            // Par exemple, vérifier si le mot de passe répond à des critères spécifiques.
+            // (Ce n'est pas nécessaire si vous avez déjà validé dans le formulaire.)
+
+            // Hachage du mot de passe
+            $hashedPassword = $passwordHasher->hashPassword($clients, $password);
             $clients->setMdp($hashedPassword);
             
+            // Sauvegarde en base de données
             $em->persist($clients);
             $em->flush();
 
@@ -61,7 +60,7 @@ class ClientsController extends AbstractController
     {
         return $this->render('clients/success.html.twig', [
             'message' => 'Nouveau compte ajouté avec succès !',
-            'login_url' => $this->generateUrl('app_login'),
+            'login_url' => $this->generateUrl('app_login_clients'),
         ]);
     }
 }

@@ -82,19 +82,12 @@
 
     <div class="container">
         <div class="logo">
-            <img src="/assets/logo.png" alt="Logo de l'application">
+            <img src="/assets/logo-budgeat.png" alt="Logo de l'application">
         </div>
 
 
-  <!-- Conteneur Flexbox pour le logo à gauche et le formulaire à droite -->
-  <div class="container">
-      <!-- Logo à gauche -->
-      <div class="logo">
-          <img src="/assets/logo.png" alt="Logo">
-      </div>
-
       <!-- Formulaire à droite -->
-      <form method="POST" action="{{ path('app_login') }}">
+      <form method="POST" action="{{ path('app_login_clients') }}">
           <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Adresse Mail</label>
               <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp" required>
@@ -121,8 +114,5 @@
 
   </div>
 
-            <button type="submit" class="btn btn-primary">Se connecter</button>
-        </form>
-    </div>
-</div>
+
 {% endblock %}
