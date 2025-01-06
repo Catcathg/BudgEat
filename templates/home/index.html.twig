@@ -11,7 +11,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 1rem;
         background-color: #fff;
         border-bottom: 2px solid #ffcc00;
     }
@@ -148,7 +147,8 @@
 
     .budget {
         text-align: center;
-        margin: 30px auto;
+        margin: auto;
+        margin-bottom: 4%;
         padding: 20px;
         background-color: #f9f9f9;
         border-radius: 10px;
@@ -264,12 +264,11 @@
 .footer {
     background-color: #f9f9f9; 
     color: #333333; 
-    padding: 40px 0; 
+    padding-top: 40px;
     width: 100%;
     text-align: left; 
     border-top: 1px solid #eee; 
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
-    margin-top: 40px; 
 }
 
 .footer .footer-content {
@@ -385,9 +384,20 @@
         font-size: 12px;
     }
 }
+
+
+
 }
 
+.pBody{
+    background: #ede8e8;
+    padding-bottom: 4%;
+    padding-top: 4%;
+}
 
+.restaurant-card button{
+    
+}
     
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -430,6 +440,8 @@
     </div>
 </div>
 
+<div class="pBody">
+
 <!-- Budget Section -->
 <div class="budget">
     <h2>C’est quoi ton budget, chef ?</h2>
@@ -469,6 +481,9 @@
             <button>Trajet</button>
         </div>
     </div>
+
+</div>
+</div>
     <!-- Footer -->
                         <footer class="footer">
                             <div
@@ -533,7 +548,7 @@
                             <!-- Copyright -->
                             <p class="footer-copyright">&copy; 2025 Budgeat. Tous droits réservés.</p>
                         </footer>
-</div>
+
 
 <script>
     const images = document.querySelectorAll('.carousel-images img');
