@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantsRepository")
  */
-class Restaurants
+class Restaurants implements UserInterface
 {
     /**
      * @ORM\Id
@@ -18,31 +21,43 @@ class Restaurants
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom est obligatoire.")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'adresse est obligatoire.")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le code postal est obligatoire.")
      */
     private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La ville est obligatoire.")
      */
     private $ville;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'adresse e-mail est obligatoire.")
+     * @Assert\Email(message="Veuillez entrer une adresse e-mail valide.")
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le mot de passe est obligatoire.")
+     * @Assert\Length(
+     *     min=8,
+     *     minMessage="Le mot de passe doit contenir au moins {{ limit }} caractères."
+     * )
+     * @Assert\Regex("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/")
      */
     private $mdp;
 
@@ -187,4 +202,34 @@ class Restaurants
         return $this;
     }
     
+
+    public function getUserIdentifier(): string
+    {
+        return $this->mail;  // Retourne l'email comme identifiant unique
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_RESTAURANT'];  // Le restaurant a ce rôle
+    }
+
+    public function getPassword(): string
+    {
+        return $this->mdp;  // Retourne le mot de passe haché
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;  // bcrypt ou argon2 n'ont pas besoin de sel
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Si tu stockais des informations sensibles supplémentaires (en plus du mot de passe)
+    }
+
+    public function getUsername(): string
+    {
+        return $this->mail;  // Nom d'utilisateur (email dans ce cas)
+    }
 }

@@ -10,9 +10,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\RestaurantsFormInscriptionType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class RestaurantsController extends AbstractController
 {
+    private $passwordEncoder;
+
+    // Injecte le service d'encodeur de mot de passe dans le constructeur
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
     
     /**
      * @Route("/restaurants", name="restaurants_list")
@@ -49,10 +58,8 @@ class RestaurantsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/restaurants/inscription", name="app_restaurants_form_inscription")
-     */
-
+ 
+    /*
      public function inscription(Request $request, EntityManagerInterface $em): Response
      {
          // Crée une nouvelle instance de ton entité Clients
@@ -66,10 +73,51 @@ class RestaurantsController extends AbstractController
  
          // Si le formulaire est soumis et valide, sauvegarde les données
          if ($form->isSubmitted() && $form->isValid()) {
+
+            // Hash the password
+            $hashedPassword = password_hash($restaurants->getMdp(), PASSWORD_BCRYPT);
+            $restaurants->setMdp($hashedPassword);
+
+             $em->persist($restaurants);
+             $em->flush();
+
+             $this->addFlash('success', 'Inscription réussie !');
+             return $this->redirectToRoute('inscription_success');
+         }
+ 
+         // Affiche le formulaire dans le template
+         return $this->render('restaurants/inscription.html.twig', [
+             'form' => $form->createView(),
+        
+         ]);
+     }*/
+
+    /**
+     * @Route("/restaurants/inscription", name="app_restaurants_form_inscription")
+     */
+     public function inscription(Request $request, EntityManagerInterface $em): Response
+     {
+         // Crée une nouvelle instance de ton entité Restaurants
+         $restaurants = new Restaurants();
+ 
+         // Crée le formulaire basé sur ta classe RestaurantsFormInscriptionType
+         $form = $this->createForm(RestaurantsFormInscriptionType::class, $restaurants);
+ 
+         // Gère la requête et la soumission du formulaire
+         $form->handleRequest($request);
+ 
+         // Si le formulaire est soumis et valide, sauvegarde les données
+         if ($form->isSubmitted() && $form->isValid()) {
+             // Hache le mot de passe avec le service d'encodeur
+             $hashedPassword = $this->passwordEncoder->encodePassword($restaurants, $restaurants->getMdp());
+             $restaurants->setMdp($hashedPassword);
+ 
+             // Persiste les données en base
              $em->persist($restaurants);
              $em->flush();
  
-             // Redirige vers une autre page ou affiche un message
+             // Message de succès
+             $this->addFlash('success', 'Inscription réussie !');
              return $this->redirectToRoute('inscription_success');
          }
  
@@ -78,7 +126,8 @@ class RestaurantsController extends AbstractController
              'form' => $form->createView(),
          ]);
      }
- 
+
+
      /**
       * @Route("/inscriptionSuccess", name="inscription_success")
       */
