@@ -5,10 +5,16 @@
 {% block body %}
 <style>
     form {
-        margin: 2%;
         border: black solid 1px;
         border-radius: 5px;
+    }
+
+    .formulaire{
         width: 50%; /* Réduit la largeur du formulaire */
+    }
+
+    .formulaire p{
+        margin-top : 2%;
     }
 
     .container {
@@ -44,13 +50,11 @@
     }
 
     .princiaplContenair{
-        /*margin-top: 90px;*/
         margin : auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
     }
 
     #marginTopNull{
@@ -58,7 +62,14 @@
     }
 
     .alert{
-    margin-bottom : 5%;
+        margin-bottom : 5%;
+    }
+
+    .dernierElement{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 50%;
     }
 
 </style>
@@ -74,8 +85,10 @@
             <img src="/assets/logo.png" alt="Logo">
         </div>
 
+        <div class = "formulaire">
+
         <!-- Formulaire à droite -->
-        <form method="POST" action="{{ path('app_login') }}">
+        <form method="POST" action="{{ path('app_login_restaurants') }}">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Adresse Mail</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp" required>
@@ -86,26 +99,25 @@
                 <input type="password" class="form-control" id="exampleInputPassword1" name="mdp" required>
             </div>
 
-            
-
             <button type="submit" class="btn btn-primary" id="marginTopNull">Se connecter</button>
 
             <!-- Affichage des messages d'erreur -->
-            {% for message in app.flashes('error') %}
+            {% if error %}
                 <div class="mb-3" id="marginTopNull">
                     <div class="alert alert-danger">
-                    {{ message }}
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
                     </div>
                 </div>
-                
-            {% endfor %}
+            {% endif %}
 
         </form>
+
+        <p>Si vous n'êtes toujours pas inscrit, veuillez cliquez <a href="/restaurants/inscription" class="btn-signup"> ici</a></p>
+        
+        </div>
+
     </div>
 
-
-
 </div>
-
 
 {% endblock %}
