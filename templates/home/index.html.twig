@@ -277,14 +277,13 @@
 
 /* Container for the restaurant list */
 .restaurant-list {
-    display: flex;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+    gap: 0.5rem; /* Réduire l'espacement entre les cartes */
     justify-content: center;
     flex-wrap: wrap;
     padding: 1rem;
 }
-
-/* Restaurant Cards */
 .restaurant-card {
     background-color: #ffc01e; /* Fond jaune pour les cartes */
     border-radius: 15px;
@@ -293,7 +292,7 @@
     text-align: center;
     padding: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Réduire la marge en bas des cartes */
     overflow: hidden;
 }
 
@@ -562,25 +561,64 @@
         <div class="restaurant-card">
             <img src="/assets/matcha.jpg" alt="Ochaya">
             <h3>Restaurants Ochaya</h3>
-            <p>4,7 ★ - 50 m</p >
+            <p>4,7 ★ - 50 m</p>
             <button>Menu</button>
             <button>Trajet</button>
         </div>
         <div class="restaurant-card">
             <img src="/assets/kodawari.jpg" alt="Kodawari Tsukiji">
             <h3>Kodawari Tsukiji</h3>
-            <p>4,0 ★ - 3 km</p >
+            <p>4,0 ★ - 3 km</p>
             <button>Menu</button>
             <button>Trajet</button>
         </div>
         <div class="restaurant-card">
             <img src="/assets/ponpon.jpg" alt="Ponpon Mochi Donuts">
             <h3>Ponpon Mochi</h3>
-            <p>4,8 ★ - 5 km</p >
+            <p>4,8 ★ - 5 km</p>
             <button>Menu</button>
             <button>Trajet</button>
         </div>
+        <div class="restaurant-card">
+            <img src="/assets/sushi.jpg" alt="Sushi House">
+            <h3>Sushi House</h3>
+            <p>4,5 ★ - 2 km</p>
+            <button>Menu</button>
+            <button>Trajet</button>
+        </div>
+        <div class="restaurant-card">
+            <img src="/assets/matcha.jpg" alt="Ochaya">
+            <h3>Restaurants Ochaya</h3>
+            <p>4,7 ★ - 50 m</p>
+            <button>Menu</button>
+            <button>Trajet</button>
+        </div>
+        <div class="restaurant-card">
+            <img src="/assets/kodawari.jpg" alt="Kodawari Tsukiji">
+            <h3>Kodawari Tsukiji</h3>
+            <p>4,0 ★ - 3 km</p>
+            <button>Menu</button>
+            <button>Trajet</button>
+        </div>
+        <div class="restaurant-card">
+            <img src="/assets/ponpon.jpg" alt="Ponpon Mochi Donuts">
+            <h3>Ponpon Mochi</h3>
+            <p>4,8 ★ - 5 km</p>
+            <button>Menu</button>
+            <button>Trajet</button>
+        </div>
+        <div class="restaurant-card">
+            <img src="/assets/sushi.jpg" alt="Sushi House">
+            <h3>Sushi House</h3>
+            <p>4,5 ★ - 2 km</p>
+            <button>Menu</button>
+            <button>Trajet</button>
+        </div>
+        <!-- Ajoutez ici d'autres cartes pour compléter la liste -->
     </div>
+</div>
+
+
 
 </div>
 </div>
@@ -660,7 +698,7 @@
     let currentIndex = 0;
 
     function updateCarousel() {
-        carouselImages.style.transform = `translateX(-${currentIndex * 100}%)`;
+        carouselImages.style.transform = translateX(-${currentIndex * 100}%);
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === currentIndex);
         });
