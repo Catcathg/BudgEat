@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Controller;
 
-use App\Entity\Clients;
-use App\Entity\Restaurants;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,80 +12,61 @@ use Symfony\Component\Security\Core\Security;
 class ConnexionController extends AbstractController
 {
     /**
-     * @Route("/clients/connexion", name="app_login")
+     * @Route("/clients/connexion", name="app_login_clients")
      */
-    public function login(Request $request, EntityManagerInterface $em): Response
+    public function loginClients(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        // Si l'utilisateur est déjà connecté, on le redirige vers le tableau de bord
         if ($this->getUser()) {
+            $roles = $this->getUser()->getRoles();
+
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirectToRoute('admin_dashboard');
+            }
+
             return $this->redirectToRoute('dashboard');
         }
 
-        // Récupérer l'email et le mot de passe soumis
-        $mail = $request->request->get('mail');
-        $mdp = $request->request->get('mdp');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-        // Recherche du client par email dans la base de données
-        $client = $em->getRepository(Clients::class)->findOneBy(['mail' => $mail]);
+        // Afficher la page de connexion
+        return $this->render('connexion/index.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
 
-        // Si un client est trouvé et que les mots de passe correspondent
-        if ($client && $mdp === $client->getMdp()) {
-            // L'utilisateur est authentifié, on gère la session
-            $session = $request->getSession  ();
-            $session->set('user_id', $client->getId()); // Sauvegarder l'ID de l'utilisateur dans la session
-            $session->set('user_role', $client->getRole()); // Sauvegarder le rôle de l'utilisateur dans la session
+    /**
+     * @Route("/clients/deconnexion", name="app_logout_clients")
+     */
+    public function logoutClients(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
 
-            // Rediriger l'utilisateur vers le tableau de bord en fonction de son rôle
-            if ($client->getRole() === 1) {
-                return $this->render('dashboard/index.html.twig');
-            } elseif ($client->getRole() === 2) {
-                return $this->render('dashboard/admin.html.twig');
+    /**
+     * @Route("/restaurants/connexion", name="app_login_restaurants")
+     */
+    public function loginRestaurant(Request $request, AuthenticationUtils $authenticationUtils): Response
+    {
+        if ($this->getUser()) {
+            $roles = $this->getUser()->getRoles();
+
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirectToRoute('admin_dashboard');
             }
-        } else {
-            // Email ou mot de passe incorrect
-            $this->addFlash('error', 'Email ou mot de passe incorrect');
+
+            return $this->redirectToRoute('restaurant_dashboard');
         }
 
-        // Rendu du formulaire de connexion
-        return $this->render('connexion/index.html.twig');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('connexion/restaurants.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
     }
-
-    /**
-     * @Route("/dashboard", name="dashboard")
-     */
-    public function dashboard(Request $request): Response
-    {
-        // Récupérer les informations de l'utilisateur depuis la session
-        $session = $request->getSession();
-        $role = $session->get('user_role');
-
-        // Vérification du rôle pour accéder à cette page
-        if ($role !== 1) {
-            // Redirection si l'utilisateur n'est pas un client
-            return $this->redirectToRoute('unauthorized');
-        }
-
-        return $this->render('dashboard/index.html.twig');
-    }
-
-    /**
-     * @Route("/admin-dashboard", name="admin_dashboard")
-     */
-    public function adminDashboard(Request $request): Response
-    {
-        // Récupérer les informations de l'utilisateur depuis la session
-        $session = $request->getSession();
-        $role = $session->get('user_role');
-
-        // Vérification du rôle pour accéder à l'admin dashboard
-        if ($role !== 2) {
-            // Redirection si l'utilisateur n'est pas un administrateur
-            return $this->redirectToRoute('unauthorized');
-        }
-
-        return $this->render('dashboard/admin.html.twig');
-    }
-
 
     /**
      * @Route("/logout", name="app_logout", methods={"GET"})
@@ -104,12 +82,8 @@ class ConnexionController extends AbstractController
         return $this->redirectToRoute('app_login');*/
     }
 
-
-
-    // coté restaurateurs :
-
     /**
-     * @Route("/restaurants/connexion", name="app_login_restaurants")
+     * @Route("/login", name="app_login")
      */
     public function loginRestaurant(Request $request, EntityManagerInterface $em, AuthenticationUtils $authenticationUtils): Response
     {

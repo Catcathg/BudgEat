@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-danger">Accès refusé</h1>
+    <p>{{ message }}</p>
+    <a href="/clients/connexion" class="btn btn-primary">Retour à la connexion</a>
+</div>
+{% endblock %}

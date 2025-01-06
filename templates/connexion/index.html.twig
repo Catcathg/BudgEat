@@ -6,101 +6,105 @@
 <style>
     form {
         margin: 2%;
-        border: black solid 1px;
+        border: 1px solid black;
         border-radius: 5px;
-        width: 50%; /* Réduit la largeur du formulaire */
+        width: 50%; 
+        padding: 20px;
+        background-color: #f9f9f9;
     }
 
     .container {
         display: flex;
-        justify-content: space-between; /* Place les éléments aux extrémités gauche et droite */
-        align-items: center; /* Aligne les éléments verticalement au centre */
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Permet l'adaptation sur petits écrans */
     }
 
     .logo {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 40%; /* Réduit la largeur du logo */
-        height: auto;
-        max-height: 80vh; /* Assure que l'image ne dépasse pas 80% de la hauteur de la fenêtre */
+        width: 40%;
+        max-height: 80vh;
     }
 
     .logo img {
-        width: 100%; /* Image occupe toute la largeur du conteneur */
-        height: auto; /* Garde les proportions */
-        max-width: 100%; /* Empêche l'image de dépasser le conteneur */
-        max-height: 80vh; /* Empêche l'image de dépasser 80% de la hauteur de la fenêtre */
+        width: 100%; 
+        height: auto;
+        max-height: 80vh; 
     }
 
-    .mb-3, button {
-        margin: 50px;
+    .form-group {
+        margin-bottom: 20px;
     }
 
-    .btn  {
+    .btn {
         background-color: #ffcc00;
-        border: #ffcc00;
+        border: 1px solid #ffcc00;
         font-weight: bold;
+        padding: 10px 20px;
+        cursor: pointer;
     }
 
-    .princiaplContenair{
-        /*margin-top: 90px;*/
-        margin : auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        
+    .btn:hover {
+        background-color: #ffb400;
+        border-color: #ffb400;
     }
 
-    #marginTopNull{
-        margin-top : 0px;
+    .main-container {
+        margin: auto;
+        text-align: center;
+        padding: 20px;
     }
 
-  .alert{
-    margin-bottom : 5%;
-  }
+    .alert {
+        margin-bottom: 20px;
+    }
 
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column; /* Aligne les éléments verticalement sur petits écrans */
+        }
+
+        form {
+            width: 90%; /* Ajuste la largeur du formulaire sur petits écrans */
+        }
+
+        .logo {
+            width: 70%;
+            margin-bottom: 20px;
+        }
+    }
 </style>
 
-<div class = "princiaplContenair">
+<div class="main-container">
+    <h1>Connectez-vous pour découvrir les meilleures offres</h1>
 
-  <h1>Connectez-vous pour découvrir les meilleurs offres</h1>
+    <div class="container">
+        <div class="logo">
+            <img src="/assets/logo.png" alt="Logo de l'application">
+        </div>
 
-
-  <!-- Conteneur Flexbox pour le logo à gauche et le formulaire à droite -->
-  <div class="container">
-      <!-- Logo à gauche -->
-      <div class="logo">
-          <img src="/assets/logo.png" alt="Logo">
-      </div>
-
-      <!-- Formulaire à droite -->
-      <form method="POST" action="{{ path('app_login') }}">
-          <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Adresse Mail</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp" required>
-              <div id="emailHelp" class="form-text">Votre adresse mail restera confidentielle.</div>
-          </div>
-          <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" name="mdp" required>
-          </div>
-          <button type="submit" class="btn btn-primary" id="marginTopNull">Se connecter</button>
-
-          <!-- Affichage des messages d'erreur -->
-          {% for message in app.flashes('error') %}
-            <div class="mb-3" id="marginTopNull">
+        <form method="POST" action="{{ path('app_login_clients') }}">
+            {% if error %}
                 <div class="alert alert-danger">
-                    {{ message }}
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
                 </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="email">Adresse mail</label>
+                <input type="email" id="email" name="mail" required class="form-control">
             </div>
-          {% endfor %}
+        
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="mdp" required class="form-control">
+            </div>
+        
 
-      </form>
-
-
-  </div>
-
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

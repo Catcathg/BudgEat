@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Bienvenue sur votre tableau de bord !</h1>
+        <p>Vous êtes connecté avec succès.</p>
+
+        <!-- Formulaire de déconnexion -->
+        <form action="{{ path('app_logout_clients') }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Se déconnecter</button>
+        </form>
+
+        <!-- Vous pouvez ajouter plus d'informations ou d'éléments pour le tableau de bord -->
+    </div>
+{% endblock %}
