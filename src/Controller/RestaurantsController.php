@@ -134,9 +134,9 @@ class RestaurantsController extends AbstractController
          ]);
      }
 
-     **
-     * @Route("/restaurants/filtre_ville_budgeat", name="filter_restaurants_by_ville_budgeat", methods={"GET"})
-     */
+   /**
+   * @Route("/restaurants/filtre_ville_budgeat", name="filter_restaurants_by_ville_budgeat", methods={"GET"})
+   */
     public function FiltreBudgeatVille(Request $request)
     {
         $budget = $request->query->get('budget');
