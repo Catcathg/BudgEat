@@ -690,57 +690,60 @@
 
 
 <script>
-    const images = document.querySelectorAll('.carousel-images img');
-    const carouselImages = document.querySelector('.carousel-images');
-    const indicators = document.querySelectorAll('.carousel-indicators span');
-    const prevButton = document.querySelector('.prev');
-    const nextButton = document.querySelector('.next');
-
-    let currentIndex = 0;
-
-    function updateCarousel() {
-        carouselImages.style.transform = translateX(-${currentIndex * 100}%);
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentIndex);
-        });
-    }
-
-    nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateCarousel();
-    });
-
-    prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateCarousel();
-    });
-
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentIndex = index;
+    document.addEventListener("DOMContentLoaded", function () {
+        // Carousel functionality
+        const images = document.querySelectorAll('.carousel-images img');
+        const carouselImages = document.querySelector('.carousel-images');
+        const indicators = document.querySelectorAll('.carousel-indicators span');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+    
+        let currentIndex = 0;
+    
+        function updateCarousel() {
+            // Correction: Proper template literal syntax with backticks
+            carouselImages.style.transform = `translateX(-${currentIndex * 100}%)`;
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+        }
+    
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
             updateCarousel();
         });
-    });
-
-    updateCarousel();
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const decreaseButton = document.getElementById("decrease");
-        const increaseButton = document.getElementById("increase");
+    
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+    
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+    
+        updateCarousel();
+    
+        // Budget functionality
+        const decreaseBtn = document.getElementById("decrease");
+        const increaseBtn = document.getElementById("increase");
         const budgetDisplay = document.getElementById("budget-display");
     
-        decreaseButton.addEventListener("click", () => {
-            let currentValue = parseInt(budgetDisplay.value);
-            if (currentValue > 0) {
-                budgetDisplay.value = currentValue - 5;
+        decreaseBtn.addEventListener("click", function () {
+            let budget = parseInt(budgetDisplay.value, 10);
+            if (budget > 0) {
+                budgetDisplay.value = budget - 5;
             }
         });
     
-        increaseButton.addEventListener("click", () => {
-            let currentValue = parseInt(budgetDisplay.value);
-            budgetDisplay.value = currentValue + 5;
+        increaseBtn.addEventListener("click", function () {
+            let budget = parseInt(budgetDisplay.value, 10);
+            budgetDisplay.value = budget + 5;
         });
     });
-   
+    
 </script>
 {% endblock %}
