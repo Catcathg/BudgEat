@@ -31,7 +31,6 @@ class Clients implements UserInterface
      */
     private $prenom;
 
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="L'adresse e-mail est obligatoire.")
@@ -42,19 +41,18 @@ class Clients implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le mot de passe est obligatoire.")
-     * @Assert\Length(
-     *     min=8,
-     *     minMessage="Le mot de passe doit contenir au moins {{ limit }} caractères."
-     * )
-     * @Assert\Regex("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/")
      */
     private $mdp;
-
 
     /**
      * @ORM\Column(type="integer")
      */
     private $budget;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     */
+    private $role = 1;  // Rôle par défaut (1 pour client)
 
     public function getId(): ?int
     {
@@ -69,7 +67,6 @@ class Clients implements UserInterface
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -81,11 +78,9 @@ class Clients implements UserInterface
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
-   
     public function getMail(): ?string
     {
         return $this->mail;
@@ -94,7 +89,6 @@ class Clients implements UserInterface
     public function setMail(string $mail): self
     {
         $this->mail = $mail;
-
         return $this;
     }
 
@@ -106,10 +100,8 @@ class Clients implements UserInterface
     public function setMdp(string $mdp): self
     {
         $this->mdp = $mdp;
-
         return $this;
     }
-
 
     public function getBudget(): ?int
     {
@@ -119,7 +111,18 @@ class Clients implements UserInterface
     public function setBudget(int $budget): self
     {
         $this->budget = $budget;
+        return $this;
+    }
 
+    // Ajout de la gestion du rôle
+    public function getRole(): int
+    {
+        return $this->role;
+    }
+
+    public function setRole(int $role): self
+    {
+        $this->role = $role;
         return $this;
     }
 
@@ -130,7 +133,8 @@ class Clients implements UserInterface
 
     public function getRoles(): array
     {
-        return ['ROLE_CLIENT'];  // Le restaurant a ce rôle
+        // Vous pouvez gérer le rôle selon le champ "role" en base de données
+        return ['ROLE_CLIENT'];  // Le rôle par défaut est "ROLE_CLIENT"
     }
 
     public function getPassword(): string
