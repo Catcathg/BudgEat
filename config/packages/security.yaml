@@ -1,40 +1,65 @@
 security:
     enable_authenticator_manager: true
 
-    # Gestion des hashers pour les mots de passe
     password_hashers:
-        App\Entity\Restaurants:
-            algorithm: auto
-        App\Entity\Clients:
-            algorithm: auto
+        App\Entity\Restaurants: 'auto'
+        App\Entity\Clients: 'auto'
 
-    # Configuration des fournisseurs d'utilisateurs
     providers:
         restaurants_provider:
             entity:
                 class: App\Entity\Restaurants
                 property: mail
 
+        clients_provider:
+            entity:
+                class: App\Entity\Clients
+                property: mail
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        main:
+        restaurants:
+            pattern: ^/restaurants
             provider: restaurants_provider
             form_login:
                 login_path: app_login_restaurants
                 check_path: app_login_restaurants
                 username_parameter: mail
                 password_parameter: mdp
-                default_target_path: /plateforme  # Page par défaut après connexion
+                default_target_path: /plateforme 
             logout:
                 path: app_logout
                 target: /
                 invalidate_session: true
 
-    # Règles de contrôle d'accès
+        clients:
+            pattern: ^/clients
+            provider: clients_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                username_parameter: mail
+                password_parameter: mdp
+                default_target_path: /
+            logout:
+                path: app_logout
+                target: /
+                invalidate_session: true
+
     access_control:
         - { path: ^/restaurants/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/plateforme, roles: ROLE_RESTAURANT }
         - { path: ^/restaurants/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
+
+

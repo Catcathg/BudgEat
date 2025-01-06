@@ -9,10 +9,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ClientsController extends AbstractController
 {
+
+    private $passwordEncoder;
+
+    // Injecte le service d'encodeur de mot de passe dans le constructeur
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     /**
      * @Route("/clients/inscription", name="app_customer_form_inscription")
      */
@@ -29,26 +38,14 @@ class ClientsController extends AbstractController
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // Récupère le mot de passe de l'utilisateur
-            $plainPassword = $clients->getMdp();
-
-            // Hache le mot de passe avant de l'enregistrer
-            $hashedPassword = $passwordHasher->hashPassword($clients, $plainPassword);
-
-            // Définit le mot de passe haché sur l'entité Clients
+            $hashedPassword = $this->passwordEncoder->encodePassword($clients, $clients->getMdp());
             $clients->setMdp($hashedPassword);
-
-            // Sauvegarde l'utilisateur dans la base de données
+            
             $em->persist($clients);
             $em->flush();
 
-            // Message de succès après l'enregistrement du client
-            $this->addFlash('success', 'Votre compte a été créé avec succès !');
-
-            return $this->redirectToRoute('inscription_success', [
-                'type' => 'client',  // Spécifie le type pour pouvoir afficher un message spécifique dans la vue
-            ]);
+            // Redirige vers une autre page ou affiche un message
+            return $this->redirectToRoute('inscription_success_clients');
         }
 
         // Si le formulaire n'est pas valide, affiche le formulaire avec les erreurs
@@ -58,14 +55,13 @@ class ClientsController extends AbstractController
     }
 
     /**
- * @Route("/inscriptionSuccess", name="inscription_success")
- */
-public function success(): Response
-{
-    // Redirige vers la page d'index des clients avec un message de succès
-    return $this->render('clients/success.html.twig', [
-        'message' => 'Votre compte a été créé avec succès. Vous pouvez vous connecter maintenant.'
-    ]);
-}
-
+     * @Route("/inscriptionSuccessClients", name="inscription_success_clients")
+     */
+    public function success(): Response
+    {
+        return $this->render('clients/success.html.twig', [
+            'message' => 'Nouveau compte ajouté avec succès !',
+            'login_url' => $this->generateUrl('app_login'),
+        ]);
+    }
 }

@@ -96,93 +96,41 @@ class RestaurantsController extends AbstractController
      * @Route("/restaurants/inscription", name="app_restaurants_form_inscription")
      */
 
-    public function inscription(Request $request, EntityManagerInterface $em): Response
-    {
-        // Crée une nouvelle instance de ton entité Clients
-        $restaurants = new Restaurants();
-
-        // Crée le formulaire basé sur ta classe ClientFormInscription
-        $form = $this->createForm(RestaurantsFormInscriptionType::class, $restaurants);
-
-        // Gère la requête et la soumission du formulaire
-        $form->handleRequest($request);
-
-        // Si le formulaire est soumis et valide, sauvegarde les données
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($restaurants);
-            $em->flush();
-
-            // Redirige vers une autre page ou affiche un message
-            return $this->redirectToRoute('inscription_success');
-        }
-
-        // Affiche le formulaire dans le template
-        return $this->render('restaurants/inscription.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/inscriptionSuccess", name="inscription_success")
-     */
-    public function success(): Response
-    {
-        return $this->render('restaurants/success.html.twig', [
-            'message' => 'Nouveau compte ajouté avec succès !',
-            'login_url' => $this->generateUrl('app_login'),
-        ]);
-    }
-
-
-    /**
-     * @Route("/restaurants/filtre_ville_budgeat", name="filter_restaurants_by_ville_budgeat", methods={"GET"})
-     */
-    public function FiltreBudgeatVille(Request $request)
-    {
-        $budget = $request->query->get('budget');
-        $ville = $request->query->get('ville');
-
-        // Récupération de tous les restaurants en fonction des critères
-        $queryBuilder = $this->getDoctrine()->getRepository(Restaurants::class)->createQueryBuilder('r');
-
-        if ($budget) {
-            $queryBuilder->andWhere('r.prix_minimum <= :budget')
-                ->setParameter('budget', $budget);
-        }
-
-        if ($ville) {
-            $queryBuilder->andWhere('r.ville = :ville')
-                ->setParameter('ville', $ville);
-        }
-
-        $restaurants = $queryBuilder->getQuery()->getResult();
-
-        return $this->render('restaurants/list.html.twig', [
-            'restaurants' => $restaurants,
-            'budget' => $budget,
-        ]);
-    }
-
-    /**
-     * @Route("/restaurants/filtre_ville", name="filter_restaurants_by_ville", methods={"GET"})
-     */
-    public function FiltreVille(Request $request)
-    {
-        $ville = $request->query->get('ville'); 
-
-        $queryBuilder = $this->getDoctrine()->getRepository(Restaurants::class)->createQueryBuilder('r');
-
-        if ($ville) {
-            $queryBuilder->andWhere('r.ville = :ville')
-                ->setParameter('ville', $ville);
-        }
-
-        $restaurants = $queryBuilder->getQuery()->getResult();
-
-        return $this->render('restaurants/index.html.twig', [
-            'restaurants' => $restaurants,
-            'selectedVille' => $ville, 
-        ]);
-    }
-
+     public function inscription(Request $request, EntityManagerInterface $em): Response
+     {
+         // Crée une nouvelle instance de ton entité Clients
+         $restaurants = new Restaurants();
+ 
+         // Crée le formulaire basé sur ta classe ClientFormInscription
+         $form = $this->createForm(RestaurantsFormInscriptionType::class, $restaurants);
+ 
+         // Gère la requête et la soumission du formulaire
+         $form->handleRequest($request);
+ 
+         // Si le formulaire est soumis et valide, sauvegarde les données
+         if ($form->isSubmitted() && $form->isValid()) {
+             $em->persist($restaurants);
+             $em->flush();
+ 
+             // Message de succès
+             $this->addFlash('success', 'Inscription réussie !');
+             return $this->redirectToRoute('inscription_success_restaurants');
+         }
+ 
+         // Affiche le formulaire dans le template
+         return $this->render('restaurants/inscription.html.twig', [
+             'form' => $form->createView(),
+         ]);
+     }
+ 
+     /**
+      * @Route("/inscriptionSuccessRestaurants", name="inscription_success_restaurants")
+      */
+     public function success(): Response
+     {
+         return $this->render('restaurants/success.html.twig', [
+             'message' => 'Nouveau compte ajouté avec succès !',
+             'login_url' => $this->generateUrl('app_login'),
+         ]);
+     }
 }

@@ -14,8 +14,10 @@ class ConnexionController extends AbstractController
     /**
      * @Route("/clients/connexion", name="app_login_clients")
      */
-    public function loginClients(Request $request, AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, EntityManagerInterface $em, AuthenticationUtils $authenticationUtils): Response
     {
+        /*
+        // Si l'utilisateur est déjà connecté, on le redirige vers le tableau de bord
         if ($this->getUser()) {
             $roles = $this->getUser()->getRoles();
 
@@ -59,12 +61,15 @@ class ConnexionController extends AbstractController
             return $this->redirectToRoute('restaurant_dashboard');
         }
 
+        // Rendu du formulaire de connexion
+        return $this->render('connexion/index.html.twig');*/
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('connexion/restaurants.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
+        // Afficher la vue avec les informations
+        return $this->render('connexion/index.html.twig', [
+            'error' => $error,  // Erreur de connexion (s'il y en a)
         ]);
     }*/
 
@@ -81,6 +86,8 @@ class ConnexionController extends AbstractController
         // Rediriger vers la page de connexion
         return $this->redirectToRoute('app_login');*/
     }
+
+    // coté restaurateurs :
 
     /**
      * @Route("/login", name="app_login")
