@@ -4,11 +4,19 @@
 
 {% block body %}
 <style>
-    form {
-        margin: 2%;
+    .form {
+         /* Réduit la largeur du formulaire */
+         width : 50%;
+    }
+
+    .form p{
+        margin-top: 2%;
+    }
+
+    form{
         border: black solid 1px;
         border-radius: 5px;
-        width: 50%; /* Réduit la largeur du formulaire */
+        
     }
 
     .container {
@@ -63,11 +71,18 @@
         
     }
 
+    .dernierElement{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 60%;
+    }
+
 </style>
 
 <div class = "princiaplContenair">
 
-    <h1>Faites parti de notre élite !</h1>
+    <h1 style ="margin-bottom: 3%;">Faites parti de notre élite !</h1>
 
     <div class="container">
         <!-- Logo à gauche -->
@@ -75,49 +90,56 @@
             <img src="/assets/logo.png" alt="Logo">
         </div>
 
+        <div class ="form">
         <!-- Formulaire à droite -->
         
             {{ form_start(form) }}
 
             <div class="mb-3">
-                {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.nom) }}
                 {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.nom) }}
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.adresse, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.adresse) }}
                 {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.adresse) }}
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.ville, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.ville) }}
                 {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.ville) }}
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.codePostal, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.codePostal) }}
                 {{ form_widget(form.codePostal, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.codePostal) }}
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.mail, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.mail) }}
                 {{ form_widget(form.mail, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.mail) }}
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.mdp, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.mdp) }}
                 {{ form_widget(form.mdp, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.mdp) }}
             </div>
 
+
+
             <button type="submit" class="btn btn-primary">S'inscrire</button>
 
             {{ form_end(form) }}
+
+            <p>Pour vous connecter, veuillez cliquez <a href="/restaurants/connexion" class="btn-signup"> ici</a></p>
+
+        </div>
         
     </div>
 

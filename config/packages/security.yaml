@@ -1,41 +1,60 @@
 security:
     enable_authenticator_manager: true
-
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        App\Entity\Restaurants: 'auto'
+       # Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        app_user_provider:
+        restaurants_provider:
             entity:
-                class: App\Entity\Clients
-                property: mail # Champ utilisé pour l'authentification
-
+                class: App\Entity\Restaurants
+                property: mail
+        # users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            lazy: true
-            provider: app_user_provider
-            form_login:
-                login_path: app_login_clients
-                check_path: app_login_clients
-                username_parameter: mail # Correspond au champ 'mail' dans ton formulaire
-                password_parameter: mdp # Correspond au champ 'mdp' dans ton formulaire
-            logout:
-                path: /clients/deconnexion # Route de déconnexion pour les clients
-                target: / # Redirection vers la page d'accueil (ou une autre page pour les clients)
+            # lazy: true
+            # provider: users_in_memory
 
-        # Pour gérer la déconnexion des restaurants, tu peux configurer un autre firewall
-        restaurant:
-            provider: app_user_provider
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+            # Configurer l'authentification par formulaire
             form_login:
                 login_path: app_login_restaurants
                 check_path: app_login_restaurants
                 username_parameter: mail
                 password_parameter: mdp
+                default_target_path: /plateforme  # ou vers la page à rediriger après la connexion
             logout:
-                path: /restaurants/deconnexion # Route de déconnexion pour les restaurants
-                target: / # Redirection vers la page d'accueil (ou autre page pour les restaurants)
+                path: app_logout
+                target: /
+                invalidate_session: true
+            # Ajouter des règles de sécurité sur les pages
+            provider: restaurants_provider
+            # Si l'utilisateur est non authentifié, il sera redirigé vers la page de login
+            # anonymous: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        # L'accès à /login est autorisé à tout le monde
+        - { path: ^/restaurants/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }  # Accès à la page de connexion sans authentification
+        - { path: ^/plateforme, roles: ROLE_RESTAURANT }  # Accès au dashboard seulement pour les utilisateurs avec le rôle ROLE_RESTAURANT
+        - { path: ^/restaurants/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     password_hashers:
         App\Entity\Clients: 
             algorithm: auto
+
+
+
+

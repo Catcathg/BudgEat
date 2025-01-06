@@ -419,10 +419,17 @@
         <li><a href="/restaurants">Restaurants</a ></li>
         <li><a href="/contact">Contact</a ></li>
     </ul>
-    <div class="buttons">
-        <a href="/clients/connexion" class="btn-login">Connexion</a >
-        <a href="/clients/inscription" class="btn-signup">Inscription</a >
-    </div>
+        {% if app.user %}
+            <div class="buttons">
+                <a href="{{ path('app_logout') }}" class="btn-login">Déconnexion</a> <!-- Lien vers la route de déconnexion -->
+                <a>{{ app.user.getNom() }}</a>
+            </div>
+        {% else %}
+            <div class="buttons">
+                <a href="/clients/connexion" class="btn-login">Connexion</a >
+                <a href="/clients/inscription" class="btn-signup">Inscription</a >
+            </div>
+        {% endif %}
 </div>
 
 <!-- Hero Section -->
