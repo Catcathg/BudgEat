@@ -1,3 +1,5 @@
+<title>{% block title %}Tous les Restaurants{% endblock %}</title>
+
 <div class="navbar">
     <div class="logo">
         <a href="/"><img src="/assets/logo-budgeat.png" alt="BudgEat Logo"></a >
@@ -18,7 +20,7 @@
                 <option value="">-- Sélectionner --</option>
                 <option value="Paris 1" {% if app.request.query.get('ville') == 'Paris 1' %} selected {% endif %}>Paris 1</option>
                 <option value="Paris 5" {% if app.request.query.get('ville') == 'Paris 5' %} selected {% endif %}>Paris 5</option>
-                <option value="Paris 6" {% if app.request.query.get('ville') == 'Paris 6' %} selected {% endif %}>Paris 6</option>
+                <option value="Paris 12" {% if app.request.query.get('ville') == 'Paris 12' %} selected {% endif %}>Paris 12</option>
                 <option value="Paris 19" {% if app.request.query.get('ville') == 'Paris 19' %} selected {% endif %}>Paris 19</option>
                 <option value="Paris 11" {% if app.request.query.get('ville') == 'Paris 11' %} selected {% endif %}>Paris 11</option>
             </select>
@@ -31,16 +33,16 @@
             <div class="restaurant-card">
                 <img src="{{ asset('assets/' ~ restaurant.image) }}" alt="{{ restaurant.nom }}">
                 <h3>{{ restaurant.nom }}</h3>
-                <p>Note : {{ restaurant.rating }} ★</p >
-                <p>Distance : {{ restaurant.distance }}</p >
-                <p>Prix minimum : {{ restaurant.PrixMinimum }} €</p >
+                <p>Note : {{ restaurant.rating }} ★</p>
+                <p>Distance : {{ restaurant.distance }}</p>
+                <p>Prix minimum : {{ restaurant.PrixMinimum }} €</p>
                 <div class="card-buttons">
-                    <button class="btn-menu">Voir plus</button>
+                    <a href="{{ path('restaurant_map', { 'id': restaurant.id }) }}"><button class="btn-menu">Voir plus</button></a>
                     <button class="btn-trajet">Trajet</button>
                 </div>
             </div>
         {% else %}
-            <p>Aucun restaurant disponible.</p >
+            <p>Aucun restaurant disponible.</p>
         {% endfor %}
     </div>
 </div>
