@@ -5,92 +5,100 @@
 {% block body %}
 <style>
 
-    /* Navbar */
+   /* Navbar */
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #fff;
-        border-bottom: 2px solid #ffcc00;
-        height:100px;
-    }
-    .navbar .logo img {
-        height: 100px;
-    }
-    .navbar ul {
-        list-style: none;
-        display: flex;
-        gap: 5rem;
-        margin: 0;
-        padding: 0;
-    }
-    .navbar ul li a {
-        text-decoration: none;
-        color: #333;
-        font-weight: bold;
-    }
-    .navbar .buttons a {
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-    .navbar .btn-login {
-        background-color: white;
-        color: #ffcc00;
-        border: 2px solid #ffcc00;
-        margin: 2rem;
-    }
-    .navbar .btn-signup {
-        background-color: #ffcc00;
-        color: white;
-        border: 2px solid #ffcc00;
-    }
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 2px solid #ffc01e;
+    height:100px;
+}
 
-    /* Hero Section */
-    .hero {
-        display: flex;
-        align-items: center;
-        background-color: #ffcc00;
-        padding: 2rem;
-        color: #333;
-    }
-    .hero-content {
-        max-width: 50%;
-        padding: 0 4.5rem;
-    }
-    .hero-content h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-    }
-    .hero-content p {
-        font-size: 1.2rem;
-    }
-    /* Conteneur principal du carrousel */
+.navbar .logo img {
+    height: 100px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar .buttons a {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar .btn-login {
+    background-color: white;
+    color: #ffc01e;
+    border: 2px solid #ffc01e;
+    margin: 2rem;
+}
+
+.navbar .btn-signup {
+    background-color: #ffc01e;
+    color: white;
+    border: 2px solid #ffc01e;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    background-color: #ffc01e;
+    padding: 2rem;
+    color: #333;
+}
+
+.hero-content {
+    max-width: 50%;
+    padding: 0 4.5rem;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+}
+
+/* Carousel */
 .carousel {
     position: relative;
     width: 100%;
-    max-width: 600px; /* Limite la largeur */
-    margin: 0 auto; /* Centré horizontalement */
-    overflow: hidden; /* Cache les images non visibles */
-    border-radius: 10px; /* Arrondi les bords du carrousel */
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
-/* Images dans le carrousel */
 .carousel-images {
     display: flex;
-    transition: transform 0.5s ease-in-out; /* Animation de défilement */
+    transition: transform 0.5s ease-in-out;
 }
 
 .carousel-images img {
     width: 100%;
-    flex-shrink: 0; /* Empêche le rétrécissement des images */
-    object-fit: cover; /* Maintient les proportions de l'image */
+    flex-shrink: 0;
+    object-fit: cover;
     height: 300px;
 }
 
-/* Boutons de navigation */
 .carousel-buttons {
     position: absolute;
     top: 50%;
@@ -98,7 +106,7 @@
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
-    pointer-events: none; /* Empêche les boutons de bloquer le clic sur les images */
+    pointer-events: none;
 }
 
 .carousel-buttons button {
@@ -108,16 +116,15 @@
     font-size: 2rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    pointer-events: auto; /* Active le clic pour les boutons */
+    pointer-events: auto;
     transition: background-color 0.3s ease;
     z-index: 10;
 }
 
 .carousel-buttons button:hover {
-    background-color: rgba(0, 0, 0, 0.8); /* Changement de couleur au survol */
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Indicateurs (petits points) */
 .carousel-indicators {
     position: absolute;
     bottom: 10px;
@@ -140,142 +147,225 @@
     background-color: #333;
 }
 
-    /* BudgEat and Restaurants */
-    .budget, .restaurants {
-        padding: 2rem;
-        text-align: center;
+/* Budget Section */
+.budget {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 4%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+.budget h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.budget-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.budget-btn {
+    background-color: #ffc01e;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.budget-btn:hover {
+    background-color: #ffc01e;
+}
+
+#budget-display {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    width: 80px;
+    border: 2px solid #ffc01e;
+    border-radius: 5px;
+    padding: 5px;
+    color: #333;
+    background-color: #fff;
+    pointer-events: none;
+}
+
+.btn-login {
+    background-color: #ffc01e;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: rgb(161, 122, 22);
+    color: white;
+}
+
+.btn-signup:hover {
+    background-color:white;
+    color:#ffc01e;
+}
+
+/* Hess Button */
+.hess {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hess h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.hess button {
+    position: absolute;
+    right: 0;
+    background-color: #ffc01e;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.hess button:hover {
+    background-color: #ffc01e;
+}
+
+/* Restaurant Section */
+.restaurants {
+    padding: 2rem;
+    text-align: center;
+}
+
+.restaurants h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Container for the restaurant list */
+.restaurant-list {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+/* Restaurant Cards */
+.restaurant-card {
+    background-color: #ffc01e; /* Fond jaune pour les cartes */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    text-align: center;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.05); 
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover img {
+    transform: scale(1.05); 
+}
+
+.restaurant-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.restaurant-card p {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.restaurant-card button {
+    margin-top: 10px;
+    padding: 0.7rem 1.2rem;
+    border-radius: 5px;
+    background-color: black; 
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.restaurant-card button:hover {
+    background-color: #e6b800;
+    color: black; 
+    transform: scale(1.05); 
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .restaurant-card {
+        width: 100%;
+        max-width: 320px;
     }
 
-    .budget {
-        text-align: center;
-        margin: auto;
-        margin-bottom: 4%;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
-    }
-    
-    .budget h2 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        font-weight: bold;
-        color: #333;
-    }
-    
-    .budget-input {
-        display: flex;
+    .restaurant-list {
+        gap: 1rem;
         justify-content: center;
-        align-items: center;
-        gap: 10px;
     }
-    
-    .budget-btn {
-        background-color: #ffcc00;
-        color: white;
-        border: none;
-        font-size: 18px;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .budget-btn:hover {
-        background-color: #e6b800;
-    }
-
-    .budget-input button:hover {
-        background-color: #e6b800;
-    }
-
-    .navbar ul li a:hover {
-        color: #ffcc00;
-    }
-    
-    #budget-display {
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        width: 80px;
-        border: 2px solid #ffcc00;
-        border-radius: 5px;
-        padding: 5px;
-        color: #333;
-        background-color: #fff;
-        pointer-events: none; /* Rend le champ non éditable */
-    }
-    
-    .btn-login {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .btn-login:hover {
-        background-color: #ffcc00;
-        color: white;
-    }
-    
-    .btn-signup:hover {
-        background-color:white;
-        color:#ffcc00;
-    }
-
-    .hess {
-        display: flex;
-        justify-content: center; /* Centre horizontalement */
-        align-items: center; /* Aligne verticalement */
-        position: relative; /* Nécessaire pour positionner le bouton à droite */
-    }
-    
-    .hess h2 {
-        margin: 0; /* Supprime les marges par défaut */
-        font-size: 1.5rem;
-        color: #333;
-        text-align: center;
-        flex-grow: 1; /* Permet à l'élément de prendre tout l'espace restant */
-    }
-    
-    .hess button {
-        position: absolute;
-        right: 0; /* Place le bouton à droite */
-        background-color: #ffcc00;
-        color: #fff;
-        border-radius: 5px;
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        font-weight: bold;
-    }
-    
-    .hess button:hover {
-        background-color: #e6b800; /* Couleur au survol */
-    }
-    
-    .restaurants { padding: 2rem; text-align: center; }
-    .restaurants h2 { margin-bottom: 2rem; }
-    .restaurant-list { display: flex; gap: 1rem; justify-content: center; }
-    .restaurant-card { background-color: #fff; border: 1px solid #ddd; border-radius: 10px; width: 200px; text-align: center; padding: 1rem; }
-    .restaurant-card img{ width: 80%; height: 180px; border-radius: 10px; margin-bottom: 1rem; }
-    .restaurant-card button, .budget-input button { margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 5px; background-color: #ffcc00; color: white; font-weight: bold; }
+}
 
 /* Footer */
 .footer {
-    color: black; 
+    color: black;
     padding-top: 40px;
     width: 100%;
-    text-align: left; 
-    border-top: 1px solid #eee; 
+    text-align: left;
+    border-top: 1px solid #eee;
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -291,21 +381,20 @@
 
 .footer-logo {
     margin-right: 40px;
-    flex: 1 1 150px; 
+    flex: 1 1 150px;
 }
 
 .footer-logo .logo {
-    width: 180px; 
+    width: 180px;
     height: auto;
 }
-
 
 .footer-links-container {
     display: flex;
     gap: 40px;
     justify-content: space-between;
-    flex: 3 1 500px; 
-    flex-wrap: wrap; 
+    flex: 3 1 500px;
+    flex-wrap: wrap;
 }
 
 .footer-links {
@@ -315,23 +404,21 @@
 }
 
 .footer-links li {
-    margin-bottom: 12px; 
+    margin-bottom: 12px;
 }
 
 .footer-links a {
-    color: #333333; 
+    color: #333333;
     text-decoration: none;
-    font-size: 1.1rem; 
-    font-weight: 500; 
+    font-size: 1.1rem;
+    font-weight: 500;
     transition: color 0.3s ease, padding-left 0.3s ease;
 }
 
 .footer-links a:hover {
-    color: #ffcc00; 
-    padding-left: 8px; 
+    color: #ffc01e;
+    padding-left: 8px;
 }
-
-
 
 .social-icons {
     display: flex;
@@ -339,36 +426,36 @@
     align-items: center;
     justify-content: flex-start;
     margin-top: 30px;
-    flex: 1 1 180px; 
+    flex: 1 1 180px;
     margin-left: 90px;
 }
 
 .social-icon {
-    font-size: 36px; 
+    font-size: 36px;
     color: #333333;
     text-decoration: none;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #ffcc00; 
-    transform: scale(1.1); 
+    color: #ffc01e;
+    transform: scale(1.1);
 }
-
 
 .footer-copyright {
     margin-top: 30px;
     font-size: 14px;
     text-align: center;
     color: #777;
-    padding-top: 20px; 
-    border-top: 1px solid #eee; 
+    padding-top: 20px;
+    border-top: 1px solid #eee;
 }
 
 @media (max-width: 768px) {
     .footer .footer-content {
         flex-direction: column;
-        text-align: center; 
+        text-align: center;
+    }
 
     .footer-links-container {
         justify-content: center;
@@ -376,7 +463,7 @@
     }
 
     .footer-logo {
-        margin: 0 auto 20px; 
+        margin: 0 auto 20px;
     }
 
     .social-icons {
@@ -394,18 +481,10 @@
     }
 }
 
-
-
-}
-
-.pBody{
+.pBody {
     background: #f5f5fa;
     padding-bottom: 4%;
     padding-top: 4%;
-}
-
-.restaurant-card button{
-    
 }
     
 </style>
