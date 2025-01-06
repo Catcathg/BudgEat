@@ -1,60 +1,40 @@
 security:
     enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+
+    # Gestion des hashers pour les mots de passe
     password_hashers:
-        App\Entity\Restaurants: 'auto'
-       # Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+        App\Entity\Restaurants:
+            algorithm: auto
+        App\Entity\Clients:
+            algorithm: auto
+
+    # Configuration des fournisseurs d'utilisateurs
     providers:
         restaurants_provider:
             entity:
                 class: App\Entity\Restaurants
                 property: mail
-        # users_in_memory: { memory: null }
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            # lazy: true
-            # provider: users_in_memory
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-            # Configurer l'authentification par formulaire
+            provider: restaurants_provider
             form_login:
                 login_path: app_login_restaurants
                 check_path: app_login_restaurants
                 username_parameter: mail
                 password_parameter: mdp
-                default_target_path: /plateforme  # ou vers la page à rediriger après la connexion
+                default_target_path: /plateforme  # Page par défaut après connexion
             logout:
                 path: app_logout
                 target: /
                 invalidate_session: true
-            # Ajouter des règles de sécurité sur les pages
-            provider: restaurants_provider
-            # Si l'utilisateur est non authentifié, il sera redirigé vers la page de login
-            # anonymous: true
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+    # Règles de contrôle d'accès
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-        # L'accès à /login est autorisé à tout le monde
-        - { path: ^/restaurants/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }  # Accès à la page de connexion sans authentification
-        - { path: ^/plateforme, roles: ROLE_RESTAURANT }  # Accès au dashboard seulement pour les utilisateurs avec le rôle ROLE_RESTAURANT
+        - { path: ^/restaurants/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/plateforme, roles: ROLE_RESTAURANT }
         - { path: ^/restaurants/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
-    password_hashers:
-        App\Entity\Clients: 
-            algorithm: auto
-
-
-
-

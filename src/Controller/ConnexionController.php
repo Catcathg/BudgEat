@@ -47,7 +47,7 @@ class ConnexionController extends AbstractController
     /**
      * @Route("/restaurants/connexion", name="app_login_restaurants")
      */
-    public function loginRestaurant(Request $request, AuthenticationUtils $authenticationUtils): Response
+    /*public function loginRestaurant(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
             $roles = $this->getUser()->getRoles();
@@ -66,7 +66,7 @@ class ConnexionController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
-    }
+    }*/
 
     /**
      * @Route("/logout", name="app_logout", methods={"GET"})
