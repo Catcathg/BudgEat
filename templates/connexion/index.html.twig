@@ -52,13 +52,21 @@
     }
 
     .main-container {
-        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+        margin: 0; /* Supprime les marges par défaut */
         text-align: center;
-        padding: 20px;
     }
 
     .alert {
         margin-bottom: 20px;
+    }
+
+    p {
+       margin-right: 150px;
     }
 
     @media (max-width: 768px) {
@@ -82,7 +90,7 @@
 
     <div class="container">
         <div class="logo">
-            <img src="/assets/logo-budgeat.png" alt="Logo de l'application">
+            <a href="/" ></p><img src="/assets/logo-budgeat.png" alt="Logo de l'application"></a>
         </div>
 
 
@@ -108,9 +116,7 @@
                     </div>
                 </div>
             {% endif %}
-
       </form>
-
 
   </div>
 
