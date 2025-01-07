@@ -45,7 +45,7 @@ class ConnexionController extends AbstractController
     }
 
     /**
-     * @Route("/loginRestaurants", name="app_login_restaurants")
+     * @Route("/restaurants/connexion", name="app_login_restaurants")
      */
     public function loginRestaurant(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
