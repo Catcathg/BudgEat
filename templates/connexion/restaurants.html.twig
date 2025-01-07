@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion Restaurants{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
 <style>
@@ -105,8 +105,7 @@
             {% if error %}
                 <div class="mb-3" id="marginTopNull">
                     <div class="alert alert-danger">
-                        <!--{{ error.messageKey|trans(error.messageData, 'security') }}-->
-                        E-mail ou mot de passe incorrects.
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
                     </div>
                 </div>
             {% endif %}
